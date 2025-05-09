@@ -24,9 +24,13 @@
         </div>
 
         <div class="seed-counter">
-          <button class="counter-btn" onclick="changeCount(this, -1)">−</button>
+          <button class="counter-btn" onclick="changeCount(this, -1)">
+            <img src="{{ url_for('static', filename='image/minus.png') }}" alt="minus" />
+          </button>
           <div class="counter-value">0</div>
-          <button class="counter-btn" onclick="changeCount(this, 1)">＋</button>
+          <button class="counter-btn" onclick="changeCount(this, 1)">
+            <img src="{{ url_for('static', filename='image/plus.png') }}" alt="plus" />
+          </button>
         </div>
       </div>
       {% endfor %}
