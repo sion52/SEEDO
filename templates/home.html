@@ -23,7 +23,7 @@
     <div class="greeting">
       <div class="greeting-left">
         <div class="nickname">반가워요, {{ nickname }}님</div>
-        <div class="message">감자가 다 자랐어요!</div>
+        <div class="message">감자가 거의 다 자랐어요!</div>
       </div>
       <img src="{{ url_for('static', filename='image/profile.png') }}" alt="profile" width="70">
     </div>
@@ -132,7 +132,7 @@
           브라우저가 video 태그를 지원하지 않습니다.
         </video>
         <br>
-        <button id="ad-close-btn" style="margin-top: 10px;">닫기</button>
+        <p>들짐승을 물리치고 있어요!</p>
       </div>
     </div>
     </div>
@@ -200,45 +200,6 @@
       });
 
       farm.addEventListener('dragover', e => e.preventDefault());
-      farm.addEventListener('click', async (e) => {
-        if (!e.target.classList.contains('crop')) return;
-
-        const src = e.target.getAttribute('src');
-        const match = src.match(/\/([a-z_]+)\.png$/);
-        if (!match) return;
-
-        const cropId = match[1];
-
-        // sprout, seed, little_xxx 는 수확 안 되게 막기
-        if (
-          cropId === 'seed' ||
-          cropId === 'sprout' ||
-          cropId.startsWith('little_')
-        ) {
-          alert("아직 다 자라지 않았어요!");
-          return;
-        }
-
-        if (!(cropId in seedCounts)) return;
-
-        try {
-          const res = await fetch('{{ url_for("harvest_crop") }}', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cropId })
-          });
-          const data = await res.json();
-
-          if (data.success) {
-            e.target.remove();
-            alert(`${cropId} 수확 완료!`);
-          } else {
-            alert("수확 실패: " + data.message);
-          }
-        } catch (err) {
-          console.error('수확 요청 실패:', err);
-        }
-      });
 
       farm.addEventListener('drop', async e => {
         e.preventDefault();
@@ -314,23 +275,25 @@
     function showAdPopup(onComplete) {
       const popup = document.getElementById('ad-popup');
       const video = document.getElementById('ad-video');
-      const btn = document.getElementById('ad-close-btn');
 
       popup.style.display = 'flex';
       video.currentTime = 0;
-      btn.disabled = true;
+      video.play();
 
+      // 영상 끝나면 팝업에 클릭 이벤트 추가
       video.onended = () => {
-        btn.disabled = false;
-      };
+        popup.addEventListener('click', async function handler() {
+          popup.removeEventListener('click', handler); // 한 번만 실행
+          popup.style.display = 'none';
 
-      btn.onclick = async () => {
-        popup.style.display = 'none';
-        await fetch('{{ url_for("watch_ad") }}', { method: 'POST' });
-        if (typeof onComplete === 'function') onComplete();
-        location.reload();
+          await fetch('{{ url_for("watch_ad") }}', { method: 'POST' });
+
+          if (typeof onComplete === 'function') onComplete();
+          location.reload();
+        });
       };
     }
+
   </script>
 </body>
 </html>
