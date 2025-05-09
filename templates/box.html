@@ -52,7 +52,7 @@
           <button class="counter-btn" onclick="changeCount(this, -1)">
             <img src="{{ url_for('static', filename='image/minus.png') }}" alt="minus" />
           </button>
-          <div class="counter-value">0</div>
+          <div class="counter-value">{{ count }}</div>
           <button class="counter-btn" onclick="changeCount(this, 1)">
             <img src="{{ url_for('static', filename='image/plus.png') }}" alt="plus" />
           </button>
