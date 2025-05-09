@@ -7,10 +7,17 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+
   <div class="app-container landing-screen">
+    <!-- 상단 고정 이미지 -->
+    <img src="{{ url_for('static', filename='image/clock.png') }}" alt="Top Bar" class="top-bar">
+
     <div class="logo-container">
       <img src="{{ url_for('static', filename='image/seedo_logo.png') }}" alt="SEEDO Logo" class="logo">
     </div>
+
+    <!-- 하단 고정 이미지 -->
+    <img src="{{ url_for('static', filename='image/bar.png') }}" alt="Bottom Clock" class="bottom-bar">
   </div>
 
   <script>

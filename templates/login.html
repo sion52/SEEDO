@@ -45,12 +45,16 @@
 <body>
   <div class="app-container">
     <div class="container">
+      <!-- 상단 고정 이미지 -->
+      <img src="{{ url_for('static', filename='image/clock.png') }}" alt="Top Bar" class="top-bar">
       <div class="message">
         <p>간편하게 로그인하고</p>
         <p>다양한 서비스를 이용해보세요</p>
       </div>
       <button class="kakao-login" onclick="kakaoLogin()">카카오 로그인</button>
     </div>
+    <!-- 하단 고정 이미지 -->
+    <img src="{{ url_for('static', filename='image/bar.png') }}" alt="Bottom Clock" class="bottom-bar">
   </div>
 </body>
 
