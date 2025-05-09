@@ -1,0 +1,14 @@
+.back{
+    bottom: 0px;
+}
+
+.store-list{
+    margin-bottom: 75px;
+}
+
+.box-close {
+    font-size: 18px;
+    cursor: pointer;
+    position: absolute;
+    right: 9%;
+}

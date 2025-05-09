@@ -1,0 +1,322 @@
+@font-face {
+  font-family: 'Pretendard-SemiBold';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  font-family: 'Pretendard-Regular',Arial, sans-serif;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+}
+
+.app-container {
+  width: 402px;
+  height: 874px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.clock {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.write{
+  background-color: white;
+  margin: 0;
+  padding: 20px auto;
+  font-size: 18px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 402px;
+  height: 115px;
+  font-family: 'Pretendard-SemiBold', Arial, sans-serif;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: white;
+  z-index: 10;
+}
+
+.store-list {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: #F6F6F6;
+  margin-top: 115px;     /* 헤더 높이만큼 내려줌 */
+  margin-bottom: 160px;  /* 구매버튼 공간 확보 */
+  scrollbar-width: none;  /* Firefox */
+  justify-items: center;
+}
+
+.store-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+
+.seed-item {
+  width: 325px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 12px 16px 0 16px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.seed-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.seed-info {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.seed-name {
+  font-family: 'Pretendard-SemiBold', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: #737373;
+  padding: 0 0 2px 0;
+}
+
+.seed-price {
+  font-family: 'Pretendard-Bold', Arial, sans-serif;
+  color: black;
+  padding: 2px 0 0 0;
+  font-size: 16px;
+}
+
+.seed-counter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.counter-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background-color: #eee;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.counter-value {
+  min-width: 24px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* ✅ 하단 내비게이션 바 */
+.nav-bar {
+  position: fixed;
+  width: 402px;
+  height: 88px;
+  background-color: white;
+  display: flex;
+  border-top: 1px solid #ccc;
+  justify-content: space-around;
+  align-items: center;
+  bottom: 0;
+}
+
+/* 각 버튼 */
+.nav-item {
+  width: 76px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 20px 0;
+}
+
+/* 가운데 버튼 강조 (active로 설정됨) */
+.nav-item.active {
+  width: 44px;
+  height: 44px;
+  transition: all 0.2s;
+}
+
+.buy-button {
+  width: 358px;
+  height: 68px;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  
+}
+
+.buy-button-wrapper {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #10B981;
+  width: 358px;
+  padding: 0 16px;
+  border-radius: 12px;
+  height: 68px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.back {
+  position: fixed;
+  bottom: 88px;
+  background-color: #F6F6F6;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+  padding: 0 0 20px 0;
+  box-sizing: border-box;
+  width: 402px;
+}
+
+.buy-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  color: #10B981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;            /* ✅ 줄 높이 제거 */
+  box-sizing: border-box;   /* ✅ 사이즈 안정 */
+  flex-shrink: 0;            /* ✅ 작아지지 않게 */
+}
+
+
+.buy-button {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.buy-total {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: 150px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;  /* 기본은 숨김 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 254px;
+  height: 114px;
+  background-color: white;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  font-family: 'Pretendard-Regular';
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  font-family: 'Pretendard-Bold';
+  font-size: 20px;
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.modal-body {
+  font-family: 'Pretendard-Regular';
+  font-size: 14px;
+  margin: 14px 0;
+  display: flex;
+}
+
+.modal-buttons {
+  font-family: 'Pretendard-Regular';
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-cancel,
+.modal-confirm {
+  flex: 1;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.modal-cancel {
+  background-color: #F2F2F2;
+  color: #333;
+}
+
+.modal-confirm {
+  background-color: #10B981;
+  color: white;
+}
+
+.modal-buttons {
+  justify-content: center;  /* ✅ 완료 모달 버튼 하나일 때 가운데 정렬 */
+}
+
+
+.bar {
+  position: fixed;
+  bottom: 0;
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>상점</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/shared.css') }}">
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="clock">
+        <img class="clock-icon" src="{{ url_for('static', filename='image/clock.png') }}" alt="clock">
+      </div>
+      <p class="write">상점</p>
+    </div>
+
+    <div class="store-list">
+      {% for seed in seeds %}
+      <div class="seed-item" data-seed-id="{{ seed.id }}" data-seed-name="{{ seed.name }}">
+        <img class="seed-icon" src="{{ url_for('static', filename='image/' + seed.image) }}" alt="{{ seed.name }}">
+
+        <div class="seed-info">
+          <div class="seed-name">{{ seed.name }}</div>
+          <div class="seed-price">{{ seed.price }} SEED</div>
+        </div>
+
+        <div class="seed-counter">
+          <button class="counter-btn" onclick="changeCount(this, -1)">−</button>
+          <div class="counter-value">0</div>
+          <button class="counter-btn" onclick="changeCount(this, 1)">＋</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="back">
+      <button class="buy-button-wrapper" onclick="submitPurchase()" type="button">
+        <div class="buy-circle">
+          <span class="buy-count">0</span>
+        </div>
+        <div class="buy-button">구매하기</div>
+        <div class="buy-total">0 SEED</div>
+      </button>
+    </div>    
+
+        <!-- 구매 확인 모달 -->
+    <div id="confirmModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span>구매 확인</span>
+        </div>
+        <p class="modal-body">
+          씨앗 <span id="confirm-count"> 0</span>개를 구매하시겠습니까?
+        </p>
+        <div class="modal-buttons">
+          <button class="modal-cancel" onclick="closeModal()">취소</button>
+          <button class="modal-confirm" onclick="confirmPurchase()">구매</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 구매 완료 모달 -->
+    <div id="successModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">구매 완료</div>
+        <p class="modal-body">
+          씨앗 <span id="success-count"> 0</span>개를 성공적으로 구매했습니다.
+        </p>
+        <div class="modal-buttons" style="justify-content: center;">
+          <button class="modal-confirm" onclick="closeSuccessModal()">확인</button>
+        </div>
+      </div>
+    </div>
+
+
+    
+
+    <div class="nav-bar">
+      <div class="nav-item" onclick="location.href='/store'">
+        <img src="{{ url_for('static', filename='image/store.png') }}">
+      </div>
+      <div class="nav-item active" onclick="location.href='/home'">
+        <img src="{{ url_for('static', filename='image/home.png') }}">
+      </div>
+      <div class="nav-item" onclick="location.href='/my'">
+        <img src="{{ url_for('static', filename='image/my.png') }}">
+      </div>
+    </div>
+    <img class="bar" src="{{ url_for('static', filename='image/bar.png') }}" alt="bar">
+  </div>
+
+
+
+  <script>
+    function changeCount(btn, delta) {
+      const counter = btn.parentElement.querySelector(".counter-value");
+      let count = parseInt(counter.textContent);
+      count = Math.max(0, count + delta);
+      counter.textContent = count;
+    }
+
+    let finalPurchaseData = {}; // 전역으로 선언
+
+    function submitPurchase() {
+      const seedItems = document.querySelectorAll(".seed-item");
+      finalPurchaseData = {};
+      let totalCount = 0;
+
+      seedItems.forEach(item => {
+        const seedId = item.dataset.seedId;
+        const count = parseInt(item.querySelector(".counter-value").textContent);
+        if (count > 0) {
+          finalPurchaseData[seedId] = count;
+          totalCount += count;
+        }
+      });
+
+      if (totalCount === 0) {
+        alert("구매할 씨앗을 선택하세요.");
+        return;
+      }
+
+      // 모달에 수량 반영 후 표시
+      document.getElementById("confirm-count").textContent = totalCount;
+      document.getElementById("confirmModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("confirmModal").style.display = "none";
+    }
+
+    function confirmPurchase() {
+      // 실제 구매 요청
+      fetch('/buy_seeds', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(finalPurchaseData)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById("confirmModal").style.display = "none";
+          document.getElementById("success-count").textContent = Object.values(finalPurchaseData).reduce((a, b) => a + b, 0);
+          document.getElementById("successModal").style.display = "flex";
+        } 
+        else {
+          alert(data.message || "구매 실패");
+        }
+      });
+      closeModal();
+    }
+    function closeSuccessModal() {
+      window.location.href = "/home";
+    }
+
+    function updateBuyInfo() {
+    const seedItems = document.querySelectorAll(".seed-item");
+    let totalCount = 0;
+    let totalPrice = 0;
+
+    seedItems.forEach(item => {
+      const count = parseInt(item.querySelector(".counter-value").textContent);
+      const price = parseInt(item.querySelector(".seed-price").textContent);
+      totalCount += count;
+      totalPrice += count * price;
+    });
+
+    document.querySelector(".buy-count").textContent = totalCount;
+    document.querySelector(".buy-total").textContent = `${totalPrice} SEED`;
+  }
+
+  function changeCount(btn, delta) {
+    const counter = btn.parentElement.querySelector(".counter-value");
+    let count = parseInt(counter.textContent);
+    count = Math.max(0, count + delta);
+    counter.textContent = count;
+
+    updateBuyInfo(); // 추가
+  }
+
+  </script>
+</body>
+</html>

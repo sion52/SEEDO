@@ -480,15 +480,8 @@ def sell_items():
         {"kakao_id": kakao_id},
         {"$inc": updates}
     )
-    if seed_id and count is not None:
-        # DB에서 씨앗 수 업데이트
-        users_collection.update_one(
-            {"kakao_id": kakao_id},
-            {"$set": {f"seeds.{seed_id}": count}}
-        )
-        return jsonify({"success": True})
     
-    return jsonify({"success": False, "message": "잘못된 요청"})
+    return jsonify(success=True, won=total_price, redirect_url=url_for("home"))
 
 
 @app.route('/my')

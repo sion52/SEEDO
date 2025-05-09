@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>창고</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/shared.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/storage.css') }}">
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="clock">
+        <img class="clock-icon" src="{{ url_for('static', filename='image/clock.png') }}" alt="clock">
+      </div>
+      <span class="write">창고</span>
+      <span class="box-close" onclick="window.history.back()">✕</span>
+    </div>
+
+    <div class="store-list">
+      {% for seed in food %}
+      <div class="seed-item" data-seed-id="{{ seed.id }}" data-seed-name="{{ seed.name }}" data-max="{{ seed.count }}">
+        <img class="seed-icon" src="{{ url_for('static', filename='image/' + seed.image) }}" alt="{{ seed.name }}">
+
+        <div class="seed-info">
+          <div class="seed-name">
+            {{ seed.name }} <span style="color: #10B981;">×{{ seed.count }}</span>
+          </div>
+          <div class="seed-price">{{ seed.price }} won</div>
+        </div>
+
+        <div class="seed-counter">
+          <button class="counter-btn" onclick="changeCount(this, -1)">−</button>
+          <div class="counter-value">0</div>
+          <button class="counter-btn" onclick="changeCount(this, 1)">＋</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="back">
+      <form id="boxForm" method="POST" action="/box" onsubmit="return prepareBoxData()">
+        <input type="hidden" name="boxData" id="boxDataInput">
+        
+        <button type="submit" class="buy-button-wrapper">
+          <div class="buy-circle">
+            <span class="buy-count">0</span>
+          </div>
+          <div class="buy-button">박스에 담기</div>
+        </button>
+      </form>
+    </div>
+   
+
+
+  <script>
+    function changeCount(btn, delta) {
+      const counter = btn.parentElement.querySelector(".counter-value");
+      let count = parseInt(counter.textContent);
+      const seedItem = btn.closest(".seed-item");
+      const maxCount = parseInt(seedItem.dataset.max); // 가져온 최대 개수
+
+      // 개수 제한 적용
+      count = Math.max(0, Math.min(count + delta, maxCount));
+      counter.textContent = count;
+
+      updateBuyInfo();
+    }
+
+    function prepareBoxData() {
+      const seedItems = document.querySelectorAll(".seed-item");
+      const data = {};
+      let totalCount = 0;
+
+      seedItems.forEach(item => {
+        const seedId = item.dataset.seedId;
+        const count = parseInt(item.querySelector(".counter-value").textContent);
+        if (count > 0) {
+          data[seedId] = count;
+          totalCount += count;
+        }
+      });
+
+      if (totalCount === 0) {
+        alert("박스에 담을 항목을 선택하세요.");
+        return false; // 제출 방지
+      }
+
+      document.getElementById("boxDataInput").value = JSON.stringify(data);
+      return true; // 제출 허용
+    }
+
+    function updateBuyInfo() {
+    const seedItems = document.querySelectorAll(".seed-item");
+    let totalCount = 0;
+    let totalPrice = 0;
+
+    seedItems.forEach(item => {
+      const count = parseInt(item.querySelector(".counter-value").textContent);
+      const price = parseInt(item.querySelector(".seed-price").textContent);
+      totalCount += count;
+      totalPrice += count * price;
+    });
+
+    document.querySelector(".buy-count").textContent = totalCount;
+    document.querySelector(".buy-total").textContent = `${totalPrice} SEED`;
+  }
+
+
+  </script>
+</body>
+</html>
