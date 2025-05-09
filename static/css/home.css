@@ -11,7 +11,17 @@ src: url("{{ url_for('static', filename='fonts/NanumSquareNeo-Variable.ttf') }}"
 font-weight: normal;
 font-style: normal;
 }
-
+@font-face {
+    font-family: 'NanumSquareNeoHeavy';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.ttf) format("truetype");
+}
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
 
 html, body {
   margin: 0;
@@ -43,6 +53,7 @@ html, body {
 .scroll-wrapper {
   flex: 1;
   overflow-y: auto;
+  padding-bottom: 150px; /* ✅ 스크롤 여백 추가 */
 }
 .scroll-wrapper::-webkit-scrollbar {
   display: none;
@@ -82,7 +93,7 @@ margin-top: 50px;
 }
 
 .logo {
-  font-family: 'NanumSquareNeo', sans-serif;
+  font-family: 'NanumSquareNeoHeavy', sans-serif;
   font-weight: bold;
   color: #0DCD89;
   font-size: 20px;
@@ -98,6 +109,7 @@ margin-top: 50px;
   gap: 6px;
   margin-left: 180px;
   cursor: pointer;
+  font-family: 'Pretendard-Bold';
 }
 
 .coin img {
@@ -120,13 +132,13 @@ margin-top: 50px;
 
 .greeting-left .nickname {
   font-weight: bold;
-  font-size: 20px;
-  font-family: 'Pretendard-Regular', sans-serif;
+  font-size: 22px;
+  font-family: 'Pretendard-Bold', sans-serif;
 }
 
 .greeting-left .message {
-  font-size: 20px;
-  color: #444;
+  font-size: 22px;
+  color: #121212;
   font-family: 'Pretendard-Regular', sans-serif;
   margin-top: 4px;
 }
