@@ -19,7 +19,7 @@
     <div class="store-list">
       {% for seed in food %}
       <div class="seed-item" data-seed-id="{{ seed.id }}" data-seed-name="{{ seed.name }}" data-max="{{ seed.count }}">
-        <img class="seed-icon" src="{{ url_for('static', filename='image/' + seed.image) }}" alt="{{ seed.name }}">
+        <img class="seed-icon" src="{{ url_for('static', filename='image/' + seed.image) }}" alt="{{ seed.name }}" onclick="showPopup()">
 
         <div class="seed-info">
           <div class="seed-name">
@@ -53,6 +53,17 @@
       </form><img src="{{ url_for('static', filename='image/bar.png') }}" alt="Bottom Clock" class="bottom-bar">
     </div>
   </div> 
+
+  <!-- 시세 팝업 -->
+<div id="price-popup" class="popup-overlay">
+  <div class="popup-box">
+    <button class="popup-close" onclick="hidePopup()">✕</button>
+    <img src="{{ url_for('static', filename='image/graph.png') }}" alt="시세 그래프" class="popup-img">
+  </div>
+</div>
+
+
+
   <script>
     function changeCount(btn, delta) {
       const counter = btn.parentElement.querySelector(".counter-value");
@@ -104,6 +115,14 @@
 
     document.querySelector(".buy-count").textContent = totalCount;
     document.querySelector(".buy-total").textContent = `${totalPrice} SEED`;
+  }
+
+  function showPopup() {
+    document.getElementById('price-popup').style.display = 'flex';
+  }
+
+  function hidePopup() {
+    document.getElementById('price-popup').style.display = 'none';
   }
 
 
