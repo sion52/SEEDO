@@ -34,7 +34,7 @@ body {
   max-width: 402px;
   height: 874px;
   position: relative;
-  background-color: #fff;
+  background-color: #f6f6f6;
   overflow: hidden;
 }
 
@@ -165,7 +165,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-top: 1px solid #ccc;
+  /* border-top: 1px solid #ccc; */
 }
 
 
@@ -202,7 +202,7 @@ body {
   font-size: 16px;
   border: none;
   border-radius: 8px;
-  color: white;
+  color: #F6F6F6;
   font-weight: bold;
   cursor: pointer;
   
@@ -213,19 +213,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #10B981;
+  background-color: #0DCD89;
   width: 358px;
-  padding: 0 16px;
-  border-radius: 12px;
+  padding: 26px 20px;
+  border-radius: 10px;
   height: 68px;
   cursor: pointer;
   box-sizing: border-box;
+  font-family: 'Pretendard-Bold';
 }
 
 /* 구매 버튼 고정 */
 .back {
   position: absolute;
-  bottom: 88px;
+  bottom: 114px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -238,7 +239,7 @@ body {
   height: 30px;
   border-radius: 50%;
   background-color: white;
-  color: #10B981;
+  color: #0DCD89;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,13 +247,14 @@ body {
   line-height: 1;            /* ✅ 줄 높이 제거 */
   box-sizing: border-box;   /* ✅ 사이즈 안정 */
   flex-shrink: 0;            /* ✅ 작아지지 않게 */
+  font-family: 'Pretendard-SemiBold';
 }
 
 
 .buy-button {
   font-size: 16px;
   font-weight: bold;
-  color: white;
+  color: #F6F6F6;
   display: flex;
   align-items: center;
 }
@@ -262,6 +264,7 @@ body {
   font-weight: bold;
   color: white;
   width: 150px;
+  text-align: right; /* ✅ 오른쪽 정렬 추가 */
 }
 
 .modal-overlay {
@@ -325,7 +328,7 @@ body {
 }
 
 .modal-confirm {
-  background-color: #10B981;
+  background-color: #0DCD89;
   color: white;
 }
 
