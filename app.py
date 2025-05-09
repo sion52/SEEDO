@@ -505,7 +505,22 @@ def sell_items():
 
 @app.route('/my')
 def my():
-    return render_template('my.html')
+    if 'kakao_id' not in session:
+        return redirect(url_for('login'))
+
+    kakao_id = session['kakao_id']
+    user = users_collection.find_one({"kakao_id": kakao_id})
+
+    if not user:
+        return redirect(url_for('login'))
+
+    return render_template(
+        'my.html',
+        nickname=user['nickname'],
+        credit=user['credit'],
+        won=user['won'],
+        potato_count=user['food']['potato']  
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
