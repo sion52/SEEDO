@@ -21,7 +21,23 @@ app.secret_key = '98dabc3d35b88ef7b5542996e20be45b'  # 보안 키 필수!
 
 
 from datetime import datetime
+def normalize_keys(user):
+    correction_map = {
+        "Eggplant": "egg_plant",
+        "redpepper": "red_pepper",
+        "paprika": "bull_pepper",
+        "grape": "grapes"
+    }
 
+    for field in ["seeds", "food", "delivery"]:
+        if field in user:
+            corrected = {}
+            for key, value in user[field].items():
+                std_key = correction_map.get(key, key)
+                corrected[std_key] = corrected.get(std_key, 0) + value
+            user[field] = corrected
+
+    return user
 default_user = {
     "kakao_id": "123456",
     "nickname": "홍길동",
@@ -235,20 +251,42 @@ def watch_ad():
 
 
 
+from datetime import datetime
+from dateutil import parser as date_parser  # 설치: pip install python-dateutil
+
 @app.route('/home')
 def home():
     kakao_id = session.get('kakao_id')
     if not kakao_id:
         return redirect(url_for('login'))
-
+    
     user = users_collection.find_one({"kakao_id": kakao_id})
     if not user:
         return redirect(url_for('login'))
-
+    user = normalize_keys(user)  # ← 키 정규화 적용
     updated_placements = []
     for idx, p in enumerate(user.get('placements', [])):
-        planted = p['plantedAt']
-        days = (datetime.utcnow().date() - planted.date()).days
+        planted_raw = p['plantedAt']
+
+        # 디버깅 로그로 현재 형태 출력
+        print(f"[DEBUG] raw plantedAt: {planted_raw} (type: {type(planted_raw)})")
+
+        # datetime 변환
+        if isinstance(planted_raw, dict) and '$date' in planted_raw:
+            planted = date_parser.parse(planted_raw['$date'])
+        elif isinstance(planted_raw, str):
+            planted = date_parser.parse(planted_raw)
+        elif isinstance(planted_raw, datetime):
+            planted = planted_raw
+        else:
+            print(f"[ERROR] Unrecognized plantedAt format: {planted_raw}")
+            planted = datetime.utcnow()
+
+        days = (datetime.now().date() - planted.date()).days
+
+
+        # 디버깅 로그로 days 확인
+        print(f"[DEBUG] seedId: {p['seedId']}, daysElapsed calculated: {days}")
 
         users_collection.update_one(
             {"kakao_id": kakao_id},
@@ -262,8 +300,17 @@ def home():
             "plantedAt": planted.strftime('%Y-%m-%d %H:%M:%S'),
             "daysElapsed": days
         })
+    print("[DEBUG] updated_placements =", updated_placements)
 
-    date_minus = user.get("date_minus", 0)
+    return render_template(
+        'home.html',
+        nickname=user['nickname'],
+        seeds=user['seeds'],
+        credit=user['credit'],
+        placements=updated_placements,  # ← 이건 이미 잘 되어 있음
+        food=user['food'],
+        date_minus=user.get("date_minus", 0)
+    )
     return render_template(
         'home.html',
         nickname=user['nickname'],
@@ -271,7 +318,7 @@ def home():
         credit=user['credit'],
         placements=updated_placements,
         food=user['food'],
-        date_minus=date_minus
+        date_minus=user.get("date_minus", 0)
     )
 
 
@@ -308,7 +355,7 @@ def storage():
     user = users_collection.find_one({"kakao_id": session['kakao_id']})
     if not user:
         return redirect(url_for('login'))
-
+    user = normalize_keys(user)  # ← 키 정규화
     food_counts = user.get('food', {})
 
     food_data = [
@@ -492,6 +539,7 @@ def my():
 
     kakao_id = session['kakao_id']
     user = users_collection.find_one({"kakao_id": kakao_id})
+    user = normalize_keys(user)  # ← 키 정규화
     if not user:
         return redirect(url_for('login'))
 
@@ -564,7 +612,7 @@ def delivery():
 
     user = users_collection.find_one({"kakao_id": session['kakao_id']})
     delivery = user.get("delivery", {})
-
+    user = normalize_keys(user)  # ← 키 정규화
     food_meta = {
         "potato":  {"name": "감자", "image": "potato_round.png"},
         "carrot":  {"name": "당근", "image": "carrot_round.png"},

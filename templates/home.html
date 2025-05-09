@@ -8,7 +8,8 @@
 </head>
 <body>
   <div class="app-container">
-    <img src="{{ url_for('static', filename='image/clock.png') }}" alt="Top Bar" class="top-bar">
+    <div class="scroll-wrapper">
+      <img src="{{ url_for('static', filename='image/clock.png') }}" alt="Top Bar" class="top-bar">
     <header>
       <div>
         <span class="logo">SEEDO</span>
@@ -79,7 +80,7 @@
 
     <div class="nav-bar">
       <div class="nav-item" onclick="location.href='/store'">
-        <img src="{{ url_for('static', filename='image/store.png') }}">
+        <img src="{{ url_for('static', filename='image/store_c.png') }}">
       </div>
       <div class="nav-item active" onclick="location.href='/home'">
         <img src="{{ url_for('static', filename='image/home.png') }}">
@@ -134,6 +135,8 @@
         <button id="ad-close-btn" style="margin-top: 10px;">닫기</button>
       </div>
     </div>
+    </div>
+    
   </div>
 
   <script>
@@ -168,6 +171,8 @@
       };
 
       placements.forEach(p => {
+        console.log(`id: ${p.seedId}, daysElapsed: ${p.daysElapsed}, type: ${typeof p.daysElapsed}`);
+
         let key = p.daysElapsed < 10 ? 'seed'
                 : p.daysElapsed < 20 ? 'sprout'
                 : p.daysElapsed < 30 ? 'little_' + p.seedId

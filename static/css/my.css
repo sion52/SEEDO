@@ -19,28 +19,31 @@
   font-style: normal;
 }
 
-/* 전역 */
-body {
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f4f4f4;
-  font-family: "Pretendard-Regular", sans-serif;
+  background: #f6f6f6;
 }
 
+
 .app-container {
+  position: relative;
   width: 402px;
   height: 874px;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: #f6f6f6;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid #ccc;
+}
+
+.app-container::-webkit-scrollbar {
+  display: none;
 }
 
 .top-bar {
@@ -64,6 +67,8 @@ body {
 .header {
   position: fixed;
   top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 402px;
   height: 115px;
   background-color: white;
@@ -72,6 +77,7 @@ body {
   align-items: center;
   z-index: 10;
 }
+
 
 .write {
   margin-top: 60px; /* 위에서 70px 내려오게 */
@@ -88,18 +94,23 @@ body {
 /* 본문 */
 .main-content {
   flex: 1;
-  padding: 16px 0;
+  padding: 130px 0 16px 0;  /* ✅ 헤더 높이만큼 위에서 띄움 */
   overflow-y: auto;
   scrollbar-width: none;
-  background-color: #F6F6F6;
 }
+
+
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+
 
 .card {
   width: 75%;
   margin: 0 auto 20px auto;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
   padding: 28px 20px;
 }
 .card.wallet-card{
@@ -236,16 +247,19 @@ body {
 }
 
 .nav-bar {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 402px;
   height: 88px;
   background-color: white;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* border-top: 1px solid #ccc; */
+  z-index: 10;
 }
+
 
 /* 각 버튼 */
 .nav-item {
@@ -277,7 +291,7 @@ body {
   bottom: 0;
   width: 402px;
   height: auto;
-  z-index: 2;
+  z-index: 12;
 }
 
 /* 폰트 웨이트 */
@@ -423,4 +437,14 @@ body {
   width: 100%;
   border-radius: 8px;
   margin-bottom: 12px;
+}
+
+.header,
+.top-bar,
+.bottom-bar,
+.nav-bar {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 402px;
 }
