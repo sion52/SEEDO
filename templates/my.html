@@ -2,66 +2,79 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>시드 상점</title>
+  <title>마이 페이지</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/credit.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/my.css') }}">
 </head>
 <body>
   <div class="app-container">
+
     <div class="statusbar-spacer"></div>
 
-    <!-- 헤더 -->
     <header class="header">
-      <p class="page-title weight-500">시드 상점</p>
-      <button class="close-btn" onclick="history.back();">&times;</button>
+      <p class="page-title weight-500">마이 페이지</p>
     </header>
 
     <main class="main-content">
-      <div class="seed-card seed-amount-10">
-        <div class="seed-left">
-          <img src="{{ url_for('static', filename='image/coin_10.png') }}" alt="10 seed">
-          <div class="seed-info">
-            <p class="seed-amount weight-400">10 SEED</p>
+      <section class="card profile-card">
+        <span class="user-name weight-600">이미주 님</span>
+        <button class="logout-btn weight-400">로그아웃 &gt;</button>
+      </section>
 
-            <p class="seed-price weight-600">무료</p>
+      <section class="card wallet-card">
+        <div class="wallet-row">
+          <div class="wallet-left">
+            <div class="circle-icon">$</div>
+            <span class="wallet-amount weight-600">100 SEED</span>
           </div>
+          <button class="wallet-action weight-400">충전하기 &gt;</button>
         </div>
-        <button class="buy-btn weight-400">획득하기 &gt;</button>
-      </div>
+        <hr>
+        <div class="wallet-row">
+          <div class="wallet-left">
+            <div class="circle-icon">₩</div>
+            <span class="wallet-amount weight-600">103,450원</span>
+          </div>
+          <button class="wallet-action weight-400">환전하기 &gt;</button>
+        </div>
+      </section>
+      
 
-      <div class="seed-card">
-        <div class="seed-left">
-          <img src="{{ url_for('static', filename='image/coin_100.png') }}" alt="100 seed">
-          <div class="seed-info">
-            <p class="seed-amount weight-400">100 SEED</p>
-            <p class="seed-price weight-600">1,000원</p>
-          </div>
+      <section class="card inventory-card">
+        <div class="card-header">
+          <span class="weight-600">내 창고</span>
+          <button class="more-btn weight-400">더보기 &gt;</button>
         </div>
-        <button class="buy-btn weight-400">구매하기 &gt;</button>
-      </div>
+        <div class="item-row">
+          <img src="{{ url_for('static', filename='image/potato.png') }}" alt="감자" class="item-img">
+          <div class="item-text">
+            <p class="weight-400">감자<br><span class="sub-count">8개</span></p>
+          </div>
+          <span class="item-price weight-500">개당 550원</span>
+        </div>
+      </section>
 
-      <div class="seed-card">
-        <div class="seed-left">
-          <img src="{{ url_for('static', filename='image/coin_1100.png') }}" alt="1100 seed">
-          <div class="seed-info">
-            <p class="seed-amount weight-400">1100 SEED</p>
-            <p class="seed-price weight-600">10,000원</p>
-          </div>
+      <section class="card delivery-card">
+        <div class="card-header">
+          <span class="weight-600">배송 현황</span>
+          <button class="more-btn weight-400">더보기 &gt;</button>
         </div>
-        <button class="buy-btn weight-400">구매하기 &gt;</button>
-      </div>
-
-      <div class="seed-card">
-        <div class="seed-left">
-          <img src="{{ url_for('static', filename='image/coin_11000.png') }}" alt="11000 seed">
-          <div class="seed-info">
-            <p class="seed-amount weight-400">11000 SEED</p>
-            <p class="seed-price weight-600">100,000원</p>
-          </div>
-        </div>
-        <button class="buy-btn weight-400">구매하기 &gt;</button>
-      </div>
+        <p class="no-delivery weight-500">배송 중인 상품이 없습니다</p>
+      </section>
     </main>
+
+    <div class="nav-bar">
+      <div class="nav-item" onclick="location.href='/store'">
+        <img src="{{ url_for('static', filename='img/homebutton.png') }}" alt="상점">
+      </div>
+      <div class="nav-item active" onclick="location.href='/home'">
+        <img src="{{ url_for('static', filename='img/call_button.png') }}" alt="홈">
+      </div>
+      <div class="nav-item" onclick="location.href='/my'">
+        <img src="{{ url_for('static', filename='img/mypage.png') }}" alt="마이페이지">
+      </div>
+    </div>
+
   </div>
 </body>
 </html>
