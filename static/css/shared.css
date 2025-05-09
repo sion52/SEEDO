@@ -200,7 +200,6 @@ body {
   object-fit: contain;
 }
 
-
 /* 가운데 버튼 강조 (active로 설정됨) */
 .nav-item.active {
   width: 44px;

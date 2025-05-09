@@ -1,263 +1,400 @@
-/* Pretendard-Regular */
 @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  /* 전역 */
-  body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-    font-family: 'Pretendard-Regular', sans-serif;
-  }
-  
-  .app-container {
-    width: 402px;
-    height: 874px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 0 5px rgba(0,0,0,0.05);
-  }
-  
-  
-  /* 헤더 */
-  .header {
-    position: relative;
-    height: 56px;
-    
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    z-index: 10;
-    padding-top: 14px;
-  }
-  .page-title {
-    font-size: 16px;
-    font-weight: 500;
-    color: #222;
-  }
-  
-  /* 본문 */
-  .main-content {
-    flex: 1;
-    padding: 16px 0;
-    overflow-y: auto;
-  }
-  .card {
-    width: 75%;
-    margin: 0 auto 20px auto;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-    padding: 28px 20px; 
-    
-  }
-  .card.inventory-card {
-    min-height: 130px; /* 카드 길이 더 늘림 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: 28px;  /* 추가 여백 */
-    padding-bottom: 28px;
-  }
-  
-  .inventory-card .item-row {
-    margin-top: 12px;  /* 카드 헤더와 감자 사이 간격 */
-  }
-  .item-price {
-    margin-right: 12px;
-  }
-  
-  
-  /* 프로필 */
-  .profile-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .user-name {
-    font-size: 16px;
-  }
-  .logout-btn {
-    background: none;
-    border: none;
-    color: #ccc;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  /* 지갑 */
-  .wallet-card {
-    background: #0DCD89;
-    color: #fff;
-    padding: 20px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
-  .wallet-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-  }
-  .wallet-card hr {
-    border: 0.5px solid rgba(255,255,255,0.6);
-  }
-  .wallet-left {
-    display: flex;
-    align-items: center;
-  }
-  .icon {
-    font-size: 20px;
-    margin-right: 8px;
-  }
-  .wallet-amount {
-    font-size: 16px;
-  }
-  .wallet-action {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  /* 창고 */
-  .inventory-card .card-header,
-  .delivery-card .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .more-btn {
-    background: none;
-    border: none;
-    color: #ccc;
-    font-size: 14px;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  .item-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;  /* 간격 추가 */
-  }
-  .item-img {
-    width: 48px;
-    height: 48px;
-    margin-right: 12px;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-  .item-text {
-    flex: 1;
-    font-size: 14px;
-  }
-  .item-text p {
-    color: #222;
-    margin: 0;
-  }
-  .sub-count {
-    color: #aaa;
-    font-weight: 400;
-  }
-  .item-price {
-    font-size: 14px;
-    color: #222;
-  }
-  .item-price {
-    font-size: 14px;
-    color: #222;
-    place-self: center start; /* 세로 가운데 + 가로 왼쪽 정렬 */
-  }
-  
-  
-  /* 배송 */
-  .no-delivery {
-    text-align: center;
-    color: #ccc;
-    font-size: 14px;
-    padding: 12px 0;
-  }
-  
-  /* 하단 내비게이션 */
-  .nav-bar {
-    height: 80px;
-    background-color: white;
-    display: flex;
-    border-top: 1px solid #ccc;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .nav-item {
-    width: 60px;
-    height: 60px;
+  font-family: 'Pretendard-SemiBold';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
 
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .nav-item.active {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-top: -20px;
-    background: linear-gradient(to bottom, #a7f3d0, #6ee7b7);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    transition: all 0.2s;
-  }
-  
-  /* 폰트 웨이트 */
-  .weight-400 { font-weight: 500; }
-  .weight-500 { font-weight: 600; }
-  .weight-600 { font-weight: 700; }
-  .item-row {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    column-gap: 12px;
-  }
-  
-  .item-text {
-    font-size: 14px;
-    text-align: left;   /* flex 제거하고 왼쪽 정렬 유지 */
-  }
-  
-  
-  .item-name {
-    font-size: 14px;
-    color: #222;
-  }
-  .sub-count {
-    color: #aaa;
-    font-size: 13px;
-    margin-top: 2px;
-  }
-  .circle-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.2);  /* 반투명 흰색 (어두운 배경 대비용) */
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 14px;
-    margin-right: 8px;
-  }
-  
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* 전역 */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  font-family: "Pretendard-Regular", sans-serif;
+}
+
+.app-container {
+  width: 402px;
+  height: 874px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+}
+
+.clock {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+/* 헤더 고정 */
+.header {
+  position: fixed;
+  top: 0;
+  width: 402px;
+  height: 115px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.write {
+  margin-top: 60px; /* 위에서 70px 내려오게 */
+  font-size: 18px;
+  font-family: 'Pretendard-SemiBold';
+}
+
+.page-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+}
+
+/* 본문 */
+.main-content {
+  flex: 1;
+  padding: 16px 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  background-color: #F6F6F6;
+}
+
+.card {
+  width: 75%;
+  margin: 0 auto 20px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  padding: 28px 20px;
+}
+.card.wallet-card{
+  margin-top: 40px;
+}
+.card.inventory-card {
+  min-height: 130px; /* 카드 길이 더 늘림 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 28px; /* 추가 여백 */
+  padding-bottom: 28px;
+}
+
+.card.delivery-card {
+  margin-bottom: 108px;
+}
+
+.inventory-card .item-row {
+  margin-top: 12px; /* 카드 헤더와 감자 사이 간격 */
+}
+.item-price {
+  margin-right: 12px;
+}
+
+/* 프로필 */
+.profile-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-name {
+  font-size: 16px;
+}
+.logout-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* 지갑 */
+.wallet-card {
+  background: #0dcd89;
+  color: #fff;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+.wallet-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+.wallet-card hr {
+  border: 0.5px solid rgba(255, 255, 255, 0.6);
+}
+.wallet-left {
+  display: flex;
+  align-items: center;
+}
+.icon {
+  font-size: 20px;
+  margin-right: 8px;
+}
+.wallet-amount {
+  font-size: 16px;
+}
+.wallet-action {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* 창고 */
+.inventory-card .card-header,
+.delivery-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.more-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.item-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px; /* 간격 추가 */
+}
+.item-img {
+  width: 48px;
+  height: 48px;
+  margin-right: 12px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.item-text {
+  flex: 1;
+  font-size: 14px;
+}
+.item-text p {
+  color: #222;
+  margin: 0;
+}
+.sub-count {
+  color: #aaa;
+  font-weight: 400;
+}
+.item-price {
+  font-size: 14px;
+  color: #222;
+}
+.item-price {
+  font-size: 14px;
+  color: #222;
+  place-self: center start; /* 세로 가운데 + 가로 왼쪽 정렬 */
+}
+
+/* 배송 */
+.no-delivery {
+  text-align: center;
+  color: #ccc;
+  font-size: 14px;
+  padding: 12px 0;
+}
+
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  width: 402px;
+  height: 88px;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* border-top: 1px solid #ccc; */
+}
+
+/* 각 버튼 */
+.nav-item {
+  width: 76px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 20px 0;
+}
+
+.nav-item img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+/* 가운데 버튼 강조 (active로 설정됨) */
+.nav-item.active {
+  width: 44px;
+  height: 44px;
+  transition: all 0.2s;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  width: 402px;
+  height: auto;
+  z-index: 2;
+}
+
+/* 폰트 웨이트 */
+.weight-400 {
+  font-weight: 500;
+}
+.weight-500 {
+  font-weight: 600;
+}
+.weight-600 {
+  font-weight: 700;
+}
+.item-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.item-text {
+  font-size: 14px;
+  text-align: left; /* flex 제거하고 왼쪽 정렬 유지 */
+}
+
+.item-name {
+  font-size: 14px;
+  color: #222;
+}
+.sub-count {
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 2px;
+}
+.circle-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.2
+  ); /* 반투명 흰색 (어두운 배경 대비용) */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;  /* 기본은 숨김 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 254px;
+  height: 114px;
+  background-color: white;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  font-family: 'Pretendard-Regular';
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  font-family: 'Pretendard-Bold';
+  font-size: 20px;
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.modal-body {
+  font-family: 'Pretendard-Regular';
+  font-size: 14px;
+  margin: 14px 0;
+  display: flex;
+}
+
+.modal-buttons {
+  font-family: 'Pretendard-Regular';
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-cancel,
+.modal-confirm {
+  flex: 1;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.modal-cancel {
+  background-color: #F2F2F2;
+  color: #333;
+}
+
+.modal-confirm {
+  background-color: #0DCD89;
+  color: white;
+}
+
+.modal-buttons {
+  justify-content: center;  /* ✅ 완료 모달 버튼 하나일 때 가운데 정렬 */
+}
