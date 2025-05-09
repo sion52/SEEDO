@@ -21,7 +21,23 @@ app.secret_key = '98dabc3d35b88ef7b5542996e20be45b'  # 보안 키 필수!
 
 
 from datetime import datetime
+def normalize_keys(user):
+    correction_map = {
+        "Eggplant": "egg_plant",
+        "redpepper": "red_pepper",
+        "paprika": "bull_pepper",
+        "grape": "grapes"
+    }
 
+    for field in ["seeds", "food", "delivery"]:
+        if field in user:
+            corrected = {}
+            for key, value in user[field].items():
+                std_key = correction_map.get(key, key)
+                corrected[std_key] = corrected.get(std_key, 0) + value
+            user[field] = corrected
+
+    return user
 default_user = {
     "kakao_id": "123456",
     "nickname": "홍길동",
@@ -243,11 +259,11 @@ def home():
     kakao_id = session.get('kakao_id')
     if not kakao_id:
         return redirect(url_for('login'))
-
+    
     user = users_collection.find_one({"kakao_id": kakao_id})
     if not user:
         return redirect(url_for('login'))
-
+    user = normalize_keys(user)  # ← 키 정규화 적용
     updated_placements = []
     for idx, p in enumerate(user.get('placements', [])):
         planted_raw = p['plantedAt']
@@ -339,7 +355,7 @@ def storage():
     user = users_collection.find_one({"kakao_id": session['kakao_id']})
     if not user:
         return redirect(url_for('login'))
-
+    user = normalize_keys(user)  # ← 키 정규화
     food_counts = user.get('food', {})
 
     food_data = [
@@ -523,6 +539,7 @@ def my():
 
     kakao_id = session['kakao_id']
     user = users_collection.find_one({"kakao_id": kakao_id})
+    user = normalize_keys(user)  # ← 키 정규화
     if not user:
         return redirect(url_for('login'))
 
@@ -595,7 +612,7 @@ def delivery():
 
     user = users_collection.find_one({"kakao_id": session['kakao_id']})
     delivery = user.get("delivery", {})
-
+    user = normalize_keys(user)  # ← 키 정규화
     food_meta = {
         "potato":  {"name": "감자", "image": "potato_round.png"},
         "carrot":  {"name": "당근", "image": "carrot_round.png"},
