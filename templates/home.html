@@ -200,6 +200,45 @@
       });
 
       farm.addEventListener('dragover', e => e.preventDefault());
+      farm.addEventListener('click', async (e) => {
+        if (!e.target.classList.contains('crop')) return;
+
+        const src = e.target.getAttribute('src');
+        const match = src.match(/\/([a-z_]+)\.png$/);
+        if (!match) return;
+
+        const cropId = match[1];
+
+        // sprout, seed, little_xxx 는 수확 안 되게 막기
+        if (
+          cropId === 'seed' ||
+          cropId === 'sprout' ||
+          cropId.startsWith('little_')
+        ) {
+          alert("아직 다 자라지 않았어요!");
+          return;
+        }
+
+        if (!(cropId in seedCounts)) return;
+
+        try {
+          const res = await fetch('{{ url_for("harvest_crop") }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cropId })
+          });
+          const data = await res.json();
+
+          if (data.success) {
+            e.target.remove();
+            alert(`${cropId} 수확 완료!`);
+          } else {
+            alert("수확 실패: " + data.message);
+          }
+        } catch (err) {
+          console.error('수확 요청 실패:', err);
+        }
+      });
 
       farm.addEventListener('drop', async e => {
         e.preventDefault();

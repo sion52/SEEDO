@@ -166,6 +166,33 @@ def login():
 
     return render_template('login.html')
 
+@app.route('/harvest_crop', methods=['POST'])
+def harvest_crop():
+    if 'kakao_id' not in session:
+        return jsonify(success=False, message="로그인 필요")
+
+    kakao_id = session['kakao_id']
+    user = users_collection.find_one({"kakao_id": kakao_id})
+    if not user:
+        return jsonify(success=False, message="사용자 없음")
+
+    data = request.get_json()
+    crop_id = data.get("cropId")
+
+    if crop_id not in user.get('food', {}):
+        return jsonify(success=False, message="알 수 없는 작물")
+
+    new_count = user['food'].get(crop_id, 0) + 1
+
+    users_collection.update_one(
+        {"kakao_id": kakao_id},
+        {
+            "$inc": {f"food.{crop_id}": 1},
+            "$pull": {"placements": {"seedId": crop_id}}  # 가장 먼저 매칭되는 하나만 제거
+        }
+    )
+
+    return jsonify(success=True, newCount=new_count)
 
 
 @app.route('/login_kakao', methods=['POST'])
