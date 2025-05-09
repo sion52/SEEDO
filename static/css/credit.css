@@ -5,6 +5,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Pretendard-SemiBold';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -12,7 +19,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f4f4;
+  background-color: #f6f6f6;
   font-family: 'Pretendard-Regular', sans-serif;
 }
 
@@ -31,37 +38,59 @@ body {
 
 .header {
   position: relative;
-  height: 56px;
-  
+  height: 115px;
+  background-color: #fff;
   border-bottom: 1px solid #eee;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
   z-index: 10;
-  padding-top: 14px;
 }
+
+/* 상단 고정 이미지 */
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 1;  /* 타이틀, 버튼 아래에 깔리게 */
+}
+
+
+
 .page-title {
-  font-size: 16px;
-  font-weight: 500;
-  color: #222;
-  line-height: 1;
+  font-size: 18px;
+  color: #1c1c1c;
+  margin-top: 70px;
+  margin-bottom: 18px;
+  font-family: 'Pretendard-SemiBold';
+  position: relative;
+  z-index: 2;  /* 이미지 위에 나오게 */
 }
+
 .close-btn {
   position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 40px;
+  top: 78px;
+  right: 30px;
   background: none;
   border: none;
-  color: #333;
+  padding: 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  z-index: 2;  /* 이미지 위에 나오게 */
 }
+
+.close-btn img {
+  width: 14px;
+  height: 14px;
+}
+
 
 .main-content {
   flex: 1;
-  padding: 16px;
+  /* padding: 16px; */
   overflow-y: auto;
   background-color: #f9f9f9;
   align-items: center;
@@ -70,26 +99,26 @@ body {
 .seed-card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 320px;
-  height: 70px;
-  padding: 12px 16px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+  width: 358px;
+  height: 86px;
+  padding: 18px 23px;  /* ✅ 상하 18px, 좌우 23px 여백 */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  
-  margin-bottom: 12px;
+  margin: 0 auto 12px auto;
+  box-sizing: border-box;  /* ✅ 패딩 포함 크기 유지 */
 }
+
+
 .seed-left {
   display: flex;
   align-items: center;
 }
 .seed-left img {
-  width: 48px;
-  height: 48px;
-  margin-right: 12px;
+  width: 50px;
+  height: 50px;
+  margin-right: 16px;
 }
 .seed-info p {
   margin: 0;
@@ -97,23 +126,25 @@ body {
 }
 .seed-amount {
   font-size: 14px;
-  color: #555;
-  
+  color: #737373;
+  font-family: 'Pretendard-SemiBold';
 }
 .seed-amount-10 {
-  margin-bottom:20px;
+  margin-top: 27px;
+  margin-bottom: 20px;
 }
 
 .seed-price {
-  font-size: 15px;
+  font-size: 16px;
   color: #000;
 }
 .buy-btn {
   background: none;
   border: none;
-  color: #555;
-  font-size: 14px;
+  color: #000;
+  font-size: 16px;
   cursor: pointer;
+  font-family: 'Pretendard-Regular';
 }
 
 .weight-400 { font-weight: 500; }
@@ -146,3 +177,11 @@ body {
   margin-bottom: 12px;
 }
 
+.bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+}

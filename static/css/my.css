@@ -148,10 +148,12 @@
     color: #ccc;
     font-size: 14px;
     cursor: pointer;
+    text-decoration: none;
   }
   .item-row {
     display: flex;
     align-items: center;
+    margin-bottom: 12px;  /* 간격 추가 */
   }
   .item-img {
     width: 48px;
@@ -192,36 +194,32 @@
   }
   
   /* 하단 내비게이션 */
-.nav-bar {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 88px;
-  background-color: white;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-top: 1px solid #ccc;
-}
+  .nav-bar {
+    height: 80px;
+    background-color: white;
+    display: flex;
+    border-top: 1px solid #ccc;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .nav-item {
+    width: 60px;
+    height: 60px;
 
-/* 각 버튼 */
-.nav-item {
-  width: 76px;
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 20px 0;
-}
-
-/* 가운데 버튼 강조 (active로 설정됨) */
-.nav-item.active {
-  width: 44px;
-  height: 44px;
-  transition: all 0.2s;
-}
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-item.active {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-top: -20px;
+    background: linear-gradient(to bottom, #a7f3d0, #6ee7b7);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+  }
   
   /* 폰트 웨이트 */
   .weight-400 { font-weight: 500; }
