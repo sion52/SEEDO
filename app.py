@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session, json
 
-rom pymongo import MongoClient
+from pymongo import MongoClient
 
 from datetime import datetime
 
