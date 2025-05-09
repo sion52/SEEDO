@@ -41,37 +41,70 @@
       
 
       <section class="card inventory-card">
-        <div class="card-header">
-          <span class="weight-600">내 창고</span>
-          <button class="more-btn weight-400">더보기 &gt;</button>
+  <div class="card-header">
+    <span class="weight-600">내 창고</span>
+    <a href="{{ url_for('storage') }}" class="more-btn weight-400">더보기 &gt;</a>
+  </div>
+
+  {% if food_preview|length > 0 %}
+    {% for item in food_preview %}
+      <div class="item-row">
+        <img src="{{ url_for('static', filename='image/' + item.image) }}" alt="{{ item.name }}" class="item-img">
+        <div class="item-text">
+          <p class="weight-400">{{ item.name }}<br><span class="sub-count">{{ item.count }}개</span></p>
         </div>
-        <div class="item-row">
-          <img src="{{ url_for('static', filename='image/potato.png') }}" alt="감자" class="item-img">
-          <div class="item-text">
-            <p class="weight-400">감자<br><span class="sub-count">{{ potato_count }}개</span></p>
-          </div>
-          <span class="item-price weight-500">개당 550원</span>
-        </div>
-      </section>
+        <span class="item-price weight-500">개당 {{ item.price }}원</span>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="no-delivery weight-500">창고에 농작물이 없습니다</p>
+  {% endif %}
+</section>
+
+
 
       <section class="card delivery-card">
-        <div class="card-header">
-          <span class="weight-600">배송 현황</span>
-          <button class="more-btn weight-400">더보기 &gt;</button>
-        </div>
-        <p class="no-delivery weight-500">배송 중인 상품이 없습니다</p>
-      </section>
+  <div class="card-header">
+    <span class="weight-600">배송 현황</span>
+    <a href="{{ url_for('delivery') }}" class="more-btn weight-400">더보기 &gt;</a>
+  </div>
+
+  {% if delivery_preview %}
+    {% for item in delivery_preview %}
+    <div class="item-row">
+      <img src="{{ url_for('static', filename='image/' + item.image) }}" alt="{{ item.name }}" class="item-img">
+      <div class="item-text">
+        <p class="weight-400">{{ item.name }}<br><span class="sub-count">{{ item.count }}개</span></p>
+      </div>
+      <span class="item-price weight-500">배송 중</span>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p class="no-delivery weight-500">배송 중인 농작물이 없습니다</p>
+  {% endif %}
+</section>
+
+
+
     </main>
 
     <div class="nav-bar">
       <div class="nav-item" onclick="location.href='/store'">
+<<<<<<< HEAD
         <img src="{{ url_for('static', filename='image/store.png') }}" alt="상점">
+=======
+        <img src="{{ url_for('static', filename='image/store_name.png') }}" alt="상점">
+>>>>>>> 4430859 (배송현황 UI 구현)
       </div>
       <div class="nav-item active" onclick="location.href='/home'">
         <img src="{{ url_for('static', filename='image/home.png') }}" alt="홈">
       </div>
       <div class="nav-item" onclick="location.href='/my'">
+<<<<<<< HEAD
         <img src="{{ url_for('static', filename='image/my.png') }}" alt="마이페이지">
+=======
+        <img src="{{ url_for('static', filename='image/mypage_click.png') }}" alt="마이페이지">
+>>>>>>> 4430859 (배송현황 UI 구현)
       </div>
     </div>
 

@@ -493,17 +493,88 @@ def my():
 
     kakao_id = session['kakao_id']
     user = users_collection.find_one({"kakao_id": kakao_id})
-
     if not user:
         return redirect(url_for('login'))
+
+    food = user['food']
+    delivery = user.get('delivery', {})
+
+    food_meta = {
+        "potato":  {"name": "감자", "image": "potato_round.png", "price": 550},
+        "carrot":  {"name": "당근", "image": "carrot_round.png", "price": 1130},
+        "tomato":  {"name": "토마토", "image": "tomato_round.png", "price": 510},
+        "basil":   {"name": "바질", "image": "basil_round.png", "price": 270},
+        "egg_plant": {"name": "가지", "image": "egg_plant_round.png", "price": 990},
+        "red_pepper": {"name": "고추", "image": "red_pepper_round.png", "price": 1130},
+        "bull_pepper": {"name": "파프리카", "image": "paprika_round.png", "price": 1130},
+        "grapes":  {"name": "포도", "image": "grape_round.png", "price": 2430},
+    }
+
+    # 창고 프리뷰
+    food_preview = []
+    for key, value in food.items():
+        if value > 0 and key in food_meta:
+            meta = food_meta[key]
+            food_preview.append({
+                "name": meta["name"],
+                "image": meta["image"],
+                "count": value,
+                "price": meta["price"]
+            })
+    food_preview = food_preview[:3]
+
+    # 배송 프리뷰
+    delivery_preview = []
+    for key, value in delivery.items():
+        if value > 0 and key in food_meta:
+            meta = food_meta[key]
+            delivery_preview.append({
+                "name": meta["name"],
+                "image": meta["image"],
+                "count": value
+            })
+    delivery_preview = delivery_preview[:3]
 
     return render_template(
         'my.html',
         nickname=user['nickname'],
         credit=user['credit'],
         won=user['won'],
-        potato_count=user['food']['potato']  
+        food_preview=food_preview,
+        delivery_preview=delivery_preview
     )
+
+@app.route('/delivery')
+def delivery():
+    if 'kakao_id' not in session:
+        return redirect(url_for('login'))
+
+    user = users_collection.find_one({"kakao_id": session['kakao_id']})
+    delivery = user.get("delivery", {})
+
+    food_meta = {
+        "potato":  {"name": "감자", "image": "potato_round.png"},
+        "carrot":  {"name": "당근", "image": "carrot_round.png"},
+        "tomato":  {"name": "토마토", "image": "tomato_round.png"},
+        "basil":   {"name": "바질", "image": "basil_round.png"},
+        "egg_plant": {"name": "가지", "image": "egg_plant_round.png"},
+        "red_pepper": {"name": "고추", "image": "red_pepper_round.png"},
+        "bull_pepper": {"name": "파프리카", "image": "paprika_round.png"},
+        "grapes":  {"name": "포도", "image": "grape_round.png"},
+    }
+
+    delivery_items = []
+    for key, count in delivery.items():
+        if count > 0 and key in food_meta:
+            delivery_items.append({
+                "name": food_meta[key]["name"],
+                "image": food_meta[key]["image"],
+                "count": count
+            })
+
+    return render_template('delivery.html', delivery_items=delivery_items)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>배송 현황</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/shared.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/storage.css') }}">
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="clock">
+        <img class="clock-icon" src="{{ url_for('static', filename='image/clock.png') }}" alt="clock">
+      </div>
+      <span class="write">배송 현황</span>
+      <span class="box-close" onclick="window.history.back()">✕</span>
+    </div>
+
+    <div class="store-list">
+      {% if delivery_items %}
+        {% for item in delivery_items %}
+        <div class="seed-item">
+          <img class="seed-icon" src="{{ url_for('static', filename='image/' + item.image) }}" alt="{{ item.name }}">
+
+          <div class="seed-info">
+            <div class="seed-name">
+              {{ item.name }} <span style="color: #10B981;">×{{ item.count }}</span>
+            </div>
+            <div class="seed-price">배송 중</div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="empty-message">배송 중인 농작물이 없습니다.</p>
+      {% endif %}
+    </div>
+
+  </div>
+</body>
+</html>
