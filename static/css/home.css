@@ -185,10 +185,11 @@ margin-top: 50px;
   display: flex;
   justify-content: space-between;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
   margin-top: 0px;
   margin-bottom: 15px;
 }
+
 
 .seed-section {
   background: #ffffff;
@@ -250,7 +251,7 @@ margin-top: 50px;
   display: flex;
   justify-content: space-between;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
   margin-top: 0px;
   margin-bottom: 20px;
 }
@@ -324,4 +325,9 @@ margin-top: 50px;
   height: 100px;
   transform: translate(-50%, -50%);
   transition: all 0.5s ease;
+}
+
+.ssi {
+  font-family: 'Pretendard-Regular';
+  font-size: 14px;
 }
