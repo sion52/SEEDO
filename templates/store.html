@@ -8,9 +8,8 @@
 <body>
   <div class="app-container">
     <div class="header">
-      <div class="clock">
-        <img class="clock-icon" src="{{ url_for('static', filename='image/clock.png') }}" alt="clock">
-      </div>
+      <!-- 상단 고정 이미지 -->
+      <img src="{{ url_for('static', filename='image/clock.png') }}" alt="Top Bar" class="top-bar">
       <p class="write">상점</p>
     </div>
 
@@ -85,7 +84,8 @@
         <img src="{{ url_for('static', filename='image/my.png') }}">
       </div>
     </div>
-    <img class="bar" src="{{ url_for('static', filename='image/bar.png') }}" alt="bar">
+    <!-- 하단 고정 이미지 -->
+    <img src="{{ url_for('static', filename='image/bar.png') }}" alt="Bottom Clock" class="bottom-bar">
   </div>
 
 
