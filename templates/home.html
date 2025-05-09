@@ -24,55 +24,41 @@
       <img src="{{ url_for('static', filename='image/profile.png') }}" alt="profile" width="70">
     </div>
     
-    <!-- 밭 -->
     <div class="farm" id="farm">
       <img class="farm-bg" src="{{ url_for('static', filename='image/soil.png') }}">
       {% for p in placements %}
         <img
           src="{{ url_for('static', filename='image/seed.png') }}"
           class="crop"
-          style="left:{{ p.x }}px; top:{{ p.y }}px; width:60px; height:60px;"
-        >
+          style="left:{{ p.x }}px; top:{{ p.y }}px; width:60px; height:60px;">
       {% endfor %}
     </div>
-    
 
-    <!-- 씨앗 섹션 -->
     <div class="seed-section">
-      <div class="seed-header">
-        <span>내 씨앗</span>
-      </div>
+      <div class="seed-header"><span>내 씨앗</span></div>
       <div class="seed-scroll">
-        <!-- tomato -->
         <div class="seed-item" draggable="true" data-seed-id="tomato">
           <img src="{{ url_for('static', filename='image/tomato_round.png') }}">
           <div class="count">{{ seeds['tomato'] }}</div>
         </div>
-        <!-- eggplant -->
         <div class="seed-item" draggable="true" data-seed-id="egg_plant">
           <img src="{{ url_for('static', filename='image/egg_plant_round.png') }}">
           <div class="count">{{ seeds['egg_plant'] }}</div>
         </div>
-        <!-- red_pepper -->
         <div class="seed-item" draggable="true" data-seed-id="red_pepper">
           <img src="{{ url_for('static', filename='image/red_pepper_round.png') }}">
           <div class="count">{{ seeds['red_pepper'] }}</div>
         </div>
-        <!-- carrot -->
         <div class="seed-item" draggable="true" data-seed-id="carrot">
           <img src="{{ url_for('static', filename='image/carrot_round.png') }}">
           <div class="count">{{ seeds['carrot'] }}</div>
         </div>
-        <!-- potato -->
         <div class="seed-item" draggable="true" data-seed-id="potato">
           <img src="{{ url_for('static', filename='image/potato_round.png') }}">
           <div class="count">{{ seeds['potato'] }}</div>
         </div>
-        
       </div>
     </div>
-
-    <!-- 이하 생략... (스토리지, 네비게이션 등) -->
 
     <div class="section">
       <div class="section-header">
@@ -82,7 +68,7 @@
       <div class="storage-item">
         <div class="info">
           <img src="{{ url_for('static', filename='image/tomato_round.png') }}">
-          <div>토마토 <div><span style="color: #aaa;">{{ food['tomato'] }}개</span></div></div>  <!-- Tomato count -->
+          <div>토마토 <div><span style="color: #aaa;">{{ food['tomato'] }}개</span></div></div>
         </div>
         <div>개당 510원</div>
       </div>
@@ -99,17 +85,62 @@
         <img src="{{ url_for('static', filename='image/Frame 15.png') }}">
       </div>
     </div>
+
+    <!-- 들짐승 알림 팝업 -->
+    <div id="beast-alert-popup" style="
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 1001;">
+      들짐승이 나타났어요!
+      <br><br>
+      <button onclick="document.getElementById('beast-alert-popup').style.display='none'">확인</button>
+    </div>
+
+    <!-- 광고 팝업 -->
+    <div id="ad-popup" style="
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;">
+      <div style="
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;">
+        <video id="ad-video" width="300" controls>
+          <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
+          브라우저가 video 태그를 지원하지 않습니다.
+        </video>
+        <br>
+        <button id="ad-close-btn" style="margin-top: 10px;">닫기</button>
+      </div>
+    </div>
   </div>
+
   <script>
+    const dateMinus = {{ date_minus }};
+
     document.addEventListener('DOMContentLoaded', () => {
-      const farm        = document.getElementById('farm');
-      const seedCounts  = {{ seeds | tojson }};
-      const placements  = {{ placements | tojson }};
-    
-      // 0) 기존에 남아있는 crop 이미지 제거
+      const farm       = document.getElementById('farm');
+      const seedCounts = {{ seeds | tojson }};
+      const placements = {{ placements | tojson }};
+
       farm.querySelectorAll('img.crop').forEach(el => el.remove());
-    
-      // ① 이미지 매핑
+
       const imageMap = {
         seed:    "{{ url_for('static', filename='image/seed.png') }}",
         sprout:  "{{ url_for('static', filename='image/sprout.png') }}",
@@ -130,15 +161,13 @@
         bull_pepper:"{{ url_for('static', filename='image/bull_pepper.png') }}",
         grapes:    "{{ url_for('static', filename='image/grapes.png') }}"
       };
-    
-      // ② 기존에 심어진 씨앗 복원
+
       placements.forEach(p => {
-        let key;
-        if      (p.daysElapsed < 10) key = 'seed';
-        else if (p.daysElapsed < 20) key = 'sprout';
-        else if (p.daysElapsed < 30) key = 'little_' + p.seedId;
-        else                          key = p.seedId;
-    
+        let key = p.daysElapsed < 10 ? 'seed'
+                : p.daysElapsed < 20 ? 'sprout'
+                : p.daysElapsed < 30 ? 'little_' + p.seedId
+                : p.seedId;
+
         const src = imageMap[key] || imageMap.seed;
         const img = document.createElement('img');
         img.src = src;
@@ -153,30 +182,24 @@
         img.title = `경과일: ${p.daysElapsed}일`;
         farm.appendChild(img);
       });
-    
-      // ③ 씨앗 드래그 시작 시
+
       document.querySelectorAll('.seed-item').forEach(item => {
         item.addEventListener('dragstart', e => {
           e.dataTransfer.setData('text/plain', item.dataset.seedId);
         });
       });
-    
-      // ④ 밭에 드롭 허용
+
       farm.addEventListener('dragover', e => e.preventDefault());
-    
-      // ⑤ 드롭 시 처리
+
       farm.addEventListener('drop', async e => {
         e.preventDefault();
         const seedId = e.dataTransfer.getData('text/plain');
-    
-        // seedId가 없거나, seedCounts에 등록되지 않았거나, 수량이 0 이하이면 중단
         if (!seedId || !(seedId in seedCounts) || seedCounts[seedId] <= 0) return;
-    
+
         const rect = farm.getBoundingClientRect();
         const x    = e.clientX - rect.left - 30;
         const y    = e.clientY - rect.top  - 30;
-    
-        // UI에 seed 이미지 추가 (daysElapsed=0)
+
         const img = document.createElement('img');
         img.src = imageMap.seed;
         img.classList.add('crop');
@@ -188,18 +211,15 @@
           top: ${y}px;
         `;
         farm.appendChild(img);
-    
-        // UI 카운트 차감
+
         seedCounts[seedId]--;
-        document.querySelector(`.seed-item[data-seed-id="${seedId}"] .count`)
-                .textContent = seedCounts[seedId];
-    
-        // 서버에 저장
+        document.querySelector(`.seed-item[data-seed-id="${seedId}"] .count`).textContent = seedCounts[seedId];
+
         try {
           const res = await fetch('{{ url_for("plant_seed") }}', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ seedId, count: seedCounts[seedId], x, y })
+            body: JSON.stringify({ seedId, x, y })
           });
           const data = await res.json();
           if (!data.success) console.error('업데이트 실패:', data.message);
@@ -207,14 +227,61 @@
           console.error('네트워크 오류:', err);
         }
       });
-    });
-    </script>
-    
 
-    
-    
-    
-    
-  
+      if (dateMinus >= 10) {
+        const beast = document.createElement('img');
+        beast.src = dateMinus >= 40
+          ? "{{ url_for('static', filename='image/dull_eat.png') }}"
+          : "{{ url_for('static', filename='image/dull.png') }}";
+        beast.classList.add('beast');
+
+        let cfg;
+        if (dateMinus < 20) cfg = { left: '65%', top: '50%', blur: '0px' };
+        else if (dateMinus < 30) cfg = { left: '60%', top: '40%', blur: '0px' };
+        else cfg = { left: '50%', top: '30%', blur: '0px' };
+
+        Object.assign(beast.style, {
+          position: 'absolute',
+          width: '80px',
+          height: '80px',
+          cursor: 'pointer',
+          left: cfg.left,
+          top: cfg.top,
+          filter: `blur(${cfg.blur})`,
+          zIndex: '500'
+        });
+
+        beast.onclick = () => {
+          showAdPopup(() => {
+            beast.remove();
+          });
+        };
+
+        farm.appendChild(beast);
+        document.getElementById('beast-alert-popup').style.display = 'block';
+      }
+    });
+
+    function showAdPopup(onComplete) {
+      const popup = document.getElementById('ad-popup');
+      const video = document.getElementById('ad-video');
+      const btn = document.getElementById('ad-close-btn');
+
+      popup.style.display = 'flex';
+      video.currentTime = 0;
+      btn.disabled = true;
+
+      video.onended = () => {
+        btn.disabled = false;
+      };
+
+      btn.onclick = async () => {
+        popup.style.display = 'none';
+        await fetch('{{ url_for("watch_ad") }}', { method: 'POST' });
+        if (typeof onComplete === 'function') onComplete();
+        location.reload();
+      };
+    }
+  </script>
 </body>
 </html>
