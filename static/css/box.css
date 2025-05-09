@@ -139,14 +139,14 @@ body {
 }
 
 .box-footer {
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
   width: 358px;
   height: 68px;
-  margin-left: 10px;
+  margin-left: 22px;
 }
 
 .btn-outline {
@@ -178,7 +178,7 @@ body {
 }
 
 .bottom-bar {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 402px;
     z-index: 2;
