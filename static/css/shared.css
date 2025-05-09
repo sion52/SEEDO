@@ -50,10 +50,9 @@ body {
 
 /* 헤더 고정 */
 .header {
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  width: 402px;
   height: 115px;
   background-color: white;
   display: flex;
@@ -176,7 +175,6 @@ body {
   align-items: center;
   /* border-top: 1px solid #ccc; */
 }
-
 
 /* 각 버튼 */
 .nav-item {
@@ -355,10 +353,9 @@ body {
 }
 
 .bottom-bar {
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    left: 0;
-    width: 100%;
+    width: 402px;
     height: auto;
     z-index: 2;
 }

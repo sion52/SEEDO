@@ -8,11 +8,14 @@
 </head>
 <body>
   <div class="app-container">
+    <img src="{{ url_for('static', filename='image/clock.png') }}" alt="Top Bar" class="top-bar">
     <header>
-      <div class="logo">SEEDO</div>
-      <div class="coin" onclick="location.href='/credit'">
+      <div>
+        <span class="logo">SEEDO</span>
+        <span class="coin" onclick="location.href='/credit'">
         <img src="{{ url_for('static', filename='image/Vector.png') }}" alt="coin">
         <span>{{ credit }}</span>
+        </span>
       </div>
     </header>
 
@@ -60,7 +63,7 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" onclick="location.href='/storage'">
       <div class="section-header">
         <span>내 창고</span>
         <span style="color: #aaa;">더보기 ></span>
@@ -86,6 +89,7 @@
       </div>
     </div>
 
+    <img src="{{ url_for('static', filename='image/bar.png') }}" alt="Bottom Clock" class="bottom-bar">
     <!-- 들짐승 알림 팝업 -->
     <div id="beast-alert-popup" style="
       display: none;
