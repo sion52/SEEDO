@@ -297,10 +297,9 @@ def add_credit():
     return jsonify({"message": f"{amount} SEED를 획득하였습니다!"})
 
 @app.route('/credit')
-
 def credit():
-
     return render_template('credit.html')
+
 @app.route('/storage')
 def storage():
     if 'kakao_id' not in session:
@@ -543,6 +542,20 @@ def my():
         food_preview=food_preview,
         delivery_preview=delivery_preview
     )
+
+@app.route('/exchange', methods=['POST'])
+def exchange():
+    if 'kakao_id' not in session:
+        return jsonify(success=False)
+
+    kakao_id = session['kakao_id']
+    users_collection.update_one(
+        {"kakao_id": kakao_id},
+        {"$set": {"won": 0}}
+    )
+
+    return jsonify(success=True)
+
 
 @app.route('/delivery')
 def delivery():

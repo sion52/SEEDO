@@ -79,17 +79,18 @@
 
     <div class="nav-bar">
       <div class="nav-item" onclick="location.href='/store'">
-        <img src="{{ url_for('static', filename='image/Frame 13.png') }}">
+        <img src="{{ url_for('static', filename='image/store.png') }}">
       </div>
       <div class="nav-item active" onclick="location.href='/home'">
-        <img src="{{ url_for('static', filename='image/homebutton.png') }}">
+        <img src="{{ url_for('static', filename='image/home.png') }}">
       </div>
       <div class="nav-item" onclick="location.href='/my'">
-        <img src="{{ url_for('static', filename='image/Frame 15.png') }}">
+        <img src="{{ url_for('static', filename='image/my.png') }}">
       </div>
     </div>
-
+    <!-- 하단 고정 이미지 -->
     <img src="{{ url_for('static', filename='image/bar.png') }}" alt="Bottom Clock" class="bottom-bar">
+    
     <!-- 들짐승 알림 팝업 -->
     <div id="beast-alert-popup" style="
       display: none;
