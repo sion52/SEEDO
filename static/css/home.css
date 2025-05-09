@@ -1,0 +1,257 @@
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+font-family: 'NanumSquareNeo';
+src: url("{{ url_for('static', filename='fonts/NanumSquareNeo-Variable.ttf') }}") format("truetype");
+font-weight: normal;
+font-style: normal;
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Pretendard-Regular', sans-serif;
+  background: #F6F6F6;
+  display: flex;
+  justify-content: center;
+}
+
+.app-container {
+  min-height: 100vh;     /* 화면 이상일 경우 스크롤 허용 */
+  height: auto;
+  overflow-y: auto;      /* 상하 스크롤 가능 */
+  background-color: #F6F6F6;
+  display: flex;
+  flex-direction: column;
+  max-width: 402px;
+width: 100%;
+margin: 0 auto;
+
+padding-bottom: 100px; /* 하단 nav-bar 여백 */
+}
+
+
+header {
+position: fixed;
+width: 355px;
+height: 60px;
+
+background-color: white;
+display: flex;
+padding: 0 25px; /* ✅ 간격 확보 */
+justify-content: space-between;
+align-items: center;
+
+box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.logo {
+  font-family: 'NanumSquareNeo', sans-serif;
+  font-weight: bold;
+  color: #0DCD89;
+  font-size: 20px;
+}
+
+.coin {
+  background: #0DCD89;
+  color: white;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coin img {
+  width: 13px;
+  height: 13px;
+}
+
+.greeting {
+  margin-top: 50px; /* 헤더랑 겹치지 않게 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F6F6F6;
+  padding: 50px;
+}
+
+.greeting-left .nickname {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.greeting-left .message {
+  font-size: 20px;
+  color: #444;
+  margin-top: 4px;
+}
+
+.farm {
+  margin-top: -130px; 
+  margin-bottom: -150px; 
+
+  width: 600px;
+  height: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+.farm-bg {
+  width: 67%;
+  height: 85%;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+.crop {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.25));
+}
+
+/* 농작물 위치 (예시: 3x3 격자에 맞게 수동 위치 지정) */
+.crop1 { top: 120px; left: 90px; }
+.crop2 { top: 120px; left: 170px; }
+.crop3 { top: 120px; left: 250px; }
+.crop4 { top: 210px; left: 90px; }
+.crop5 { top:210px; left: 170px; }
+.crop6 { top: 210px; left: 250px; }
+.crop7 { top: 300px; left: 90px; }
+.crop8 { top: 300px; left: 170px; }
+.crop9 { top: 300px; left: 250px; }
+.seed-section {
+  padding: 0 20px;
+}
+
+.seed-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+
+.seed-section {
+  background: #ffffff;
+  margin: 20px;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0px 10px rgba(0,0,0,0.1);
+}
+
+.seed-scroll {
+  display: flex;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.seed-item {
+  position: relative;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+}
+
+.seed-item img {
+  width: 50px;
+  height: 50px;
+}
+
+.count {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background: #0DCD89;
+  color: white;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section {
+  background: #ffffff;
+  margin: 20px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0px 10px rgba(0,0,0,0.1);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.storage-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.storage-item .info {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.storage-item img {
+  width: 50px;
+  height: 50px;
+}
+
+/* ✅ 하단 내비게이션 바 */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  width: 402px;
+  height: 80px;
+  background-color: white;
+  display: flex;
+  border-top: 1px solid #ccc;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-item {
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item.active {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-top: -20px;
+  background: linear-gradient(to bottom, #a7f3d0, #6ee7b7);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: all 0.2s;
+}

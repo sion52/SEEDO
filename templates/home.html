@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>SEEDO Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <div class="logo">SEEDO</div>
+      <div class="coin" onclick="location.href='/credit'">
+        <img src="{{ url_for('static', filename='image/Vector.png') }}" alt="coin">
+        <span">{{ credit }}</span> <!-- Tomato count -->
+      </div>
+    </header>
+
+    <div class="greeting">
+      <div class="greeting-left">
+        <div class="nickname">반가워요, {{ nickname }}님</div>  <!-- 닉네임 출력 -->
+        <div class="message">감자가 거의 다 자랐어요!</div>
+      </div>
+      <img src="{{ url_for('static', filename='image/profile.png') }}" alt="profile" width="70">
+    </div>
+    
+
+    <div class="farm">
+      <img class="farm-bg" src="{{ url_for('static', filename='image/soil.png') }}">
+
+      <img class="crop crop1" src="{{ url_for('static', filename='image/seed.png') }}">
+      <img class="crop crop2" src="{{ url_for('static', filename='image/potato.png') }}">
+      <img class="crop crop3" src="{{ url_for('static', filename='image/sprout.png') }}">
+      <img class="crop crop4" src="{{ url_for('static', filename='image/tomato.png') }}">
+      <img class="crop crop5" src="{{ url_for('static', filename='image/potato.png') }}">
+      <img class="crop crop6" src="{{ url_for('static', filename='image/seed.png') }}">
+      <img class="crop crop7" src="{{ url_for('static', filename='image/seed.png') }}">
+      <img class="crop crop8" src="{{ url_for('static', filename='image/tomato.png') }}">
+      <img class="crop crop9" src="{{ url_for('static', filename='image/sprout.png') }}">
+    </div>
+
+
+    <div class="seed-section">
+        <div class="seed-header">
+            <span>내 씨앗</span>
+        </div>
+        <div class="seed-scroll">
+            <div class="seed-item" draggable="true">
+                <img src="{{ url_for('static', filename='image/tomato_image.png') }}">
+                <div class="count">{{ food['tomato'] }}</div>  <!-- Tomato count를 db 값으로 표시 -->
+            </div>
+            <div class="seed-item" draggable="true">
+                <img src="{{ url_for('static', filename='image/eggplant.png') }}">
+                <div class="count">{{ food['egg_plant'] }}</div>  <!-- Eggplant count를 db 값으로 표시 -->
+            </div>
+            <div class="seed-item" draggable="true">
+                <img src="{{ url_for('static', filename='image/pepper.png') }}">
+                <div class="count">{{ food['red_pepper'] }}</div>  <!-- Red Pepper count를 db 값으로 표시 -->
+            </div>
+            <div class="seed-item" draggable="true">
+                <img src="{{ url_for('static', filename='image/carret.png') }}">
+                <div class="count">{{ food['carrot'] }}</div>  <!-- Carrot count를 db 값으로 표시 -->
+            </div>
+            <div class="seed-item" draggable="true">
+                <img src="{{ url_for('static', filename='image/potato_image.png') }}">
+                <div class="count">{{ food['potato'] }}</div>  <!-- Potato count를 db 값으로 표시 -->
+            </div>
+        </div>
+    </div>
+  
+
+    <div class="section">
+      <div class="section-header">
+        <span>내 창고</span>
+        <span style="color: #aaa;">더보기 ></span>
+      </div>
+      <div class="storage-item">
+        <div class="info">
+          <img src="{{ url_for('static', filename='image/tomato_image.png') }}">
+          <div>토마토 <div><span style="color: #aaa;">{{ food['tomato'] }}개</span></div></div>  <!-- Tomato count -->
+        </div>
+        <div>개당 510원</div>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <div class="nav-item" onclick="location.href='/store'">
+        <img src="{{ url_for('static', filename='image/Frame 13.png') }}">
+      </div>
+      <div class="nav-item active" onclick="location.href='/home'">
+        <img src="{{ url_for('static', filename='image/homebutton.png') }}">
+      </div>
+      <div class="nav-item" onclick="location.href='/my'">
+        <img src="{{ url_for('static', filename='image/Frame 15.png') }}">
+      </div>
+    </div>
+  </div>
+</body>
+</html>
