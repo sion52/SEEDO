@@ -8,12 +8,15 @@
 </head>
 <body>
   <div class="app-container">
-    <div class="statusbar-spacer"></div>
 
     <!-- 헤더 -->
     <header class="header">
+      <img src="{{ url_for('static', filename='image/clock.png') }}" alt="Clock" class="top-bar">
       <p class="page-title weight-500">시드 상점</p>
-      <button class="close-btn" onclick="history.back();">&times;</button>
+      <button class="close-btn" onclick="history.back();">
+        <img src="{{ url_for('static', filename='image/close.png') }}" alt="닫기">
+      </button>
+
     </header>
 
     <main class="main-content">
@@ -64,6 +67,9 @@
         <button class="buy-btn weight-400">구매하기 &gt;</button>
       </div>
     </main>
+
+    <!-- 하단 고정 이미지 -->
+    <img src="{{ url_for('static', filename='image/bar.png') }}" alt="Bottom Clock" class="bottom-bar">
   </div>
 
 <!-- 광고 팝업 -->
