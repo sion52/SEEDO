@@ -235,6 +235,9 @@ def watch_ad():
 
 
 
+from datetime import datetime
+from dateutil import parser as date_parser  # 설치: pip install python-dateutil
+
 @app.route('/home')
 def home():
     kakao_id = session.get('kakao_id')
@@ -247,8 +250,27 @@ def home():
 
     updated_placements = []
     for idx, p in enumerate(user.get('placements', [])):
-        planted = p['plantedAt']
-        days = (datetime.utcnow().date() - planted.date()).days
+        planted_raw = p['plantedAt']
+
+        # 디버깅 로그로 현재 형태 출력
+        print(f"[DEBUG] raw plantedAt: {planted_raw} (type: {type(planted_raw)})")
+
+        # datetime 변환
+        if isinstance(planted_raw, dict) and '$date' in planted_raw:
+            planted = date_parser.parse(planted_raw['$date'])
+        elif isinstance(planted_raw, str):
+            planted = date_parser.parse(planted_raw)
+        elif isinstance(planted_raw, datetime):
+            planted = planted_raw
+        else:
+            print(f"[ERROR] Unrecognized plantedAt format: {planted_raw}")
+            planted = datetime.utcnow()
+
+        days = (datetime.now().date() - planted.date()).days
+
+
+        # 디버깅 로그로 days 확인
+        print(f"[DEBUG] seedId: {p['seedId']}, daysElapsed calculated: {days}")
 
         users_collection.update_one(
             {"kakao_id": kakao_id},
@@ -262,8 +284,17 @@ def home():
             "plantedAt": planted.strftime('%Y-%m-%d %H:%M:%S'),
             "daysElapsed": days
         })
+    print("[DEBUG] updated_placements =", updated_placements)
 
-    date_minus = user.get("date_minus", 0)
+    return render_template(
+        'home.html',
+        nickname=user['nickname'],
+        seeds=user['seeds'],
+        credit=user['credit'],
+        placements=updated_placements,  # ← 이건 이미 잘 되어 있음
+        food=user['food'],
+        date_minus=user.get("date_minus", 0)
+    )
     return render_template(
         'home.html',
         nickname=user['nickname'],
@@ -271,7 +302,7 @@ def home():
         credit=user['credit'],
         placements=updated_placements,
         food=user['food'],
-        date_minus=date_minus
+        date_minus=user.get("date_minus", 0)
     )
 
 
