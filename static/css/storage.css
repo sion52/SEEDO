@@ -44,6 +44,7 @@
   cursor: pointer;
   position: absolute;
   right: 9%;
+  margin-top: 60px;
 }
 
 .bottom-bar {
