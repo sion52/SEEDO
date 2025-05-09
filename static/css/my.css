@@ -248,7 +248,7 @@ html, body {
 
 .nav-bar {
   position: absolute;
-  bottom: 20px;
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
   width: 402px;
@@ -291,8 +291,7 @@ html, body {
   bottom: 0;
   width: 402px;
   height: auto;
-  z-index: 2;
-  background: white;
+  z-index: 12;
 }
 
 /* 폰트 웨이트 */
