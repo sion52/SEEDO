@@ -339,27 +339,27 @@ def storage():
     food_counts = user.get('food', {})
 
     food_data = [
-        {"id": "carrot", "name": "당근", "price": 1130, "count": food_counts.get("carrot", 0), "image": "carrot.png"},
-        {"id": "tomato", "name": "토마토", "price": 510, "count": food_counts.get("tomato", 0), "image": "tomato.png"},
-        {"id": "basil", "name": "바질", "price": 270, "count": food_counts.get("basil", 0), "image": "basil.png"},
-        {"id": "potato", "name": "감자", "price": 550, "count": food_counts.get("potato", 0), "image": "potato.png"},
-        {"id": "Eggplant", "name": "가지", "price": 990, "count": food_counts.get("egg_plant", 0), "image": "Eggplant.png"},
-        {"id": "redpepper", "name": "고추", "price": 1130, "count": food_counts.get("red_pepper", 0), "image": "redpepper.png"},
-        {"id": "paprika", "name": "파프리카", "price": 1130, "count": food_counts.get("bull_pepper", 0), "image": "paprika.png"},
-        {"id": "grape", "name": "포도", "price": 2430, "count": food_counts.get("grapes", 0), "image": "grape.png"}
+        {"id": "carrot", "name": "당근", "price": 1130, "count": food_counts.get("carrot", 0), "image": "carrot_round.png"},
+        {"id": "tomato", "name": "토마토", "price": 510, "count": food_counts.get("tomato", 0), "image": "tomato_round.png"},
+        {"id": "basil", "name": "바질", "price": 270, "count": food_counts.get("basil", 0), "image": "basil_round.png"},
+        {"id": "potato", "name": "감자", "price": 550, "count": food_counts.get("potato", 0), "image": "potato_round.png"},
+        {"id": "Eggplant", "name": "가지", "price": 990, "count": food_counts.get("egg_plant", 0), "image": "egg_plant_round.png"},
+        {"id": "redpepper", "name": "고추", "price": 1130, "count": food_counts.get("red_pepper", 0), "image": "red_pepper_round.png"},
+        {"id": "paprika", "name": "파프리카", "price": 1130, "count": food_counts.get("bull_pepper", 0), "image": "paprika_round.png"},
+        {"id": "grape", "name": "포도", "price": 2430, "count": food_counts.get("grapes", 0), "image": "grape_round.png"}
     ]
     return render_template('storage.html', food=food_data)
 @app.route('/store')
 def store():
     seed_data = [
-        {"id": "carrot", "name": "당근 씨앗", "price": 50, "count": 0, "image": "carrot.png"},
-        {"id": "tomato", "name": "토마토 씨앗", "price": 50, "count": 0, "image": "tomato.png"},
-        {"id": "basil", "name": "바질 씨앗", "price": 50, "count": 0, "image": "basil.png"},
-        {"id": "potato", "name": "감자 씨앗", "price": 50, "count": 0, "image": "potato.png"},
-        {"id": "Eggplant", "name": "가지 씨앗", "price": 50, "count": 0, "image": "Eggplant.png"},
-        {"id": "redpepper", "name": "고추 씨앗", "price": 50, "count": 0, "image": "redpepper.png"},
-        {"id": "paprika", "name": "파프리카 씨앗", "price": 50, "count": 0, "image": "paprika.png"},
-        {"id": "grape", "name": "포도 씨앗", "price": 100, "count": 0, "image": "grape.png"}
+        {"id": "carrot", "name": "당근 씨앗", "price": 50, "count": 0, "image": "carrot_round.png"},
+        {"id": "tomato", "name": "토마토 씨앗", "price": 50, "count": 0, "image": "tomato_round.png"},
+        {"id": "basil", "name": "바질 씨앗", "price": 50, "count": 0, "image": "basil_round.png"},
+        {"id": "potato", "name": "감자 씨앗", "price": 50, "count": 0, "image": "potato_round.png"},
+        {"id": "Eggplant", "name": "가지 씨앗", "price": 50, "count": 0, "image": "egg_plant_round.png"},
+        {"id": "redpepper", "name": "고추 씨앗", "price": 50, "count": 0, "image": "red_pepper_round.png"},
+        {"id": "paprika", "name": "파프리카 씨앗", "price": 50, "count": 0, "image": "paprika_round.png"},
+        {"id": "grape", "name": "포도 씨앗", "price": 100, "count": 0, "image": "grape_round.png"}
     ]
     return render_template('store.html', seeds=seed_data)
 
