@@ -167,6 +167,8 @@
       };
 
       placements.forEach(p => {
+        console.log(`id: ${p.seedId}, daysElapsed: ${p.daysElapsed}, type: ${typeof p.daysElapsed}`);
+
         let key = p.daysElapsed < 10 ? 'seed'
                 : p.daysElapsed < 20 ? 'sprout'
                 : p.daysElapsed < 30 ? 'little_' + p.seedId
