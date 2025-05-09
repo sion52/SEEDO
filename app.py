@@ -51,7 +51,7 @@ default_user = {
         "basil": 0,
         "red_pepper": 0,
         "bull_pepper": 0,
-        "grapes": 0
+        "grape": 0
     },
     "food": {
         "tomato": 0,
@@ -61,7 +61,7 @@ default_user = {
         "basil": 0,
         "red_pepper": 0,
         "bull_pepper": 0,
-        "grapes": 0
+        "grape": 0
 
     },
 
@@ -73,7 +73,7 @@ default_user = {
         "basil": 0,
         "red_pepper": 0,
         "bull_pepper": 0,
-        "grapes": 0
+        "grape": 0
 
     },
 
@@ -185,11 +185,11 @@ def login_kakao():
             "won": 0,
             "seeds": {
                 "tomato": 0, "potato": 0, "carrot": 0, "egg_plant": 0,
-                "basil": 0, "red_pepper": 0, "bull_pepper": 0, "grapes": 0
+                "basil": 0, "red_pepper": 0, "bull_pepper": 0, "grape": 0
             },
             "food": {
                 "tomato": 0, "potato": 0, "carrot": 0, "egg_plant": 0,
-                "basil": 0, "red_pepper": 0, "bull_pepper": 0, "grapes": 0
+                "basil": 0, "red_pepper": 0, "bull_pepper": 0, "grape": 0
             },
             "delivery": {
                 "tomato": 0,
@@ -199,7 +199,7 @@ def login_kakao():
                 "basil": 0,
                 "red_pepper": 0,
                 "bull_pepper": 0,
-                "grapes": 0
+                "grape": 0
             },
             "placements": [],
             "last_check_in_date": now,
@@ -366,7 +366,7 @@ def storage():
         {"id": "Eggplant", "name": "가지", "price": 990, "count": food_counts.get("egg_plant", 0), "image": "egg_plant_round.png"},
         {"id": "redpepper", "name": "고추", "price": 1130, "count": food_counts.get("red_pepper", 0), "image": "red_pepper_round.png"},
         {"id": "paprika", "name": "파프리카", "price": 1130, "count": food_counts.get("bull_pepper", 0), "image": "paprika_round.png"},
-        {"id": "grape", "name": "포도", "price": 2430, "count": food_counts.get("grapes", 0), "image": "grape_round.png"}
+        {"id": "grape", "name": "포도", "price": 2430, "count": food_counts.get("grape", 0), "image": "grape_round.png"}
     ]
     return render_template('storage.html', food=food_data)
 @app.route('/store')
@@ -554,7 +554,7 @@ def my():
         "egg_plant": {"name": "가지", "image": "egg_plant_round.png", "price": 990},
         "red_pepper": {"name": "고추", "image": "red_pepper_round.png", "price": 1130},
         "bull_pepper": {"name": "파프리카", "image": "paprika_round.png", "price": 1130},
-        "grapes":  {"name": "포도", "image": "grape_round.png", "price": 2430},
+        "grape":  {"name": "포도", "image": "grape_round.png", "price": 2430},
     }
 
     # 창고 프리뷰
@@ -621,7 +621,7 @@ def delivery():
         "egg_plant": {"name": "가지", "image": "egg_plant_round.png"},
         "red_pepper": {"name": "고추", "image": "red_pepper_round.png"},
         "bull_pepper": {"name": "파프리카", "image": "paprika_round.png"},
-        "grapes":  {"name": "포도", "image": "grape_round.png"},
+        "grape":  {"name": "포도", "image": "grape_round.png"},
     }
 
     delivery_items = []
@@ -634,6 +634,31 @@ def delivery():
             })
 
     return render_template('delivery.html', delivery_items=delivery_items)
+
+@app.route('/clear_delivery', methods=['POST'])
+def clear_delivery():
+    if 'kakao_id' not in session:
+        return jsonify(success=False, message="로그인이 필요합니다.")
+
+    kakao_id = session['kakao_id']
+
+    empty_delivery = {
+        "tomato": 0,
+        "potato": 0,
+        "carrot": 0,
+        "egg_plant": 0,
+        "basil": 0,
+        "red_pepper": 0,
+        "bull_pepper": 0,
+        "grapes": 0
+    }
+
+    users_collection.update_one(
+        {"kakao_id": kakao_id},
+        {"$set": {"delivery": empty_delivery}}
+    )
+
+    return jsonify(success=True)
 
 
 

@@ -103,7 +103,7 @@
                 >
               </p>
             </div>
-            <span class="item-price weight-500">배송 중</span>
+            <span class="item-price weight-500" onclick="showAdPopup()" >배송 중</span>
           </div>
           {% endfor %} {% else %}
           <p class="no-delivery weight-500">배송 중인 농작물이 없습니다</p>
@@ -121,17 +121,27 @@
             </div>
           </div>
         </div>
+        <!-- 광고 팝업 -->
+        <div id="ad-popup" class="ad-popup">
+          <div class="popup-content">
+            <video id="ad-video" muted controls>
+              <source src="{{ url_for('static', filename='delivery.mp4') }}" type="video/mp4">
+              광고를 불러올 수 없습니다.
+            </video>
+            <p>배달이 진행 중 입니다.</p>
+          </div>
+        </div>
       </main>
 
       <div class="nav-bar">
         <div class="nav-item" onclick="location.href='/store'">
-          <img src="{{ url_for('static', filename='image/store.png') }}" />
+          <img src="{{ url_for('static', filename='image/store_c.png') }}" />
         </div>
         <div class="nav-item active" onclick="location.href='/home'">
           <img src="{{ url_for('static', filename='image/home.png') }}" />
         </div>
         <div class="nav-item" onclick="location.href='/my'">
-          <img src="{{ url_for('static', filename='image/my.png') }}" />
+          <img src="{{ url_for('static', filename='image/my_s.png') }}" />
         </div>
       </div>
       <!-- 하단 고정 이미지 -->
@@ -154,6 +164,39 @@
             }
           });
       }
+      let videoEnded = false;
+
+      function showAdPopup() {
+        const popup = document.getElementById('ad-popup');
+        const video = document.getElementById('ad-video');
+        videoEnded = false;
+
+        popup.style.display = 'flex';
+        video.currentTime = 0;
+        video.onended = () => {
+          videoEnded = true;  // 영상 종료 상태 저장
+        };
+
+        video.play();
+      }
+
+      document.addEventListener('click', function () {
+        const popup = document.getElementById('ad-popup');
+        if (popup.style.display === 'flex' && videoEnded) {
+          fetch('/clear_delivery', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              popup.style.display = 'none';
+              location.reload();  // 새로고침으로 배송 목록 갱신
+            }
+          });
+        }
+      });
+
 
       function closeSuccessModal() {
         document.getElementById("successModal").style.display = "none";
