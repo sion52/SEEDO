@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from pymongo import MongoClient
-
+from datetime import datetime
 app = Flask(__name__)
 
 # MongoDB 연결
@@ -34,9 +34,43 @@ default_user = {
         "red_pepper": 0,
         "bull_pepper": 0,
         "grapes": 0
-    }
+    },
+    "placements": []
 }
+@app.route('/plant_seed', methods=['POST'])
+def plant_seed():
+    kakao_id = session.get('kakao_id')
+    if not kakao_id:
+        return jsonify({"success": False})
 
+    data   = request.get_json()
+    seedId = data['seedId']
+    x      = data['x']
+    y      = data['y']
+    now    = datetime.utcnow()
+
+    # 처음 심을 땐 daysElapsed = 0
+    placement = {
+        "seedId": seedId,
+        "x": x,
+        "y": y,
+        "plantedAt": now,
+        "daysElapsed": 0
+    }
+
+    users_collection.update_one(
+        {"kakao_id": kakao_id},
+        {
+            "$inc": { f"seeds.{seedId}": -1 },
+            "$push": { "placements": placement }
+        }
+    )
+
+    return jsonify({
+        "success": True,
+        "plantedAt": now.strftime('%Y-%m-%d %H:%M:%S'),
+        "daysElapsed": 0
+    })
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -78,7 +112,8 @@ def login_kakao():
                 "red_pepper": 0,
                 "bull_pepper": 0,
                 "grapes": 0
-            }
+            },
+            "placements": []
         })
 
     session['kakao_id'] = kakao_id
@@ -94,8 +129,36 @@ def home():
     if not user:
         return redirect(url_for('login'))
 
-    # 'food', 'seeds', 'credit' 값을 템플릿으로 전달
-    return render_template('home.html', nickname=user['nickname'], food=user['food'], seeds=user['seeds'], credit=user['credit'])
+    # 최신 daysElapsed 계산 & DB 업데이트
+    updated_placements = []
+    for idx, p in enumerate(user.get('placements', [])):
+        # p['plantedAt'] 는 datetime 객체
+        planted = p['plantedAt']
+        days = (datetime.utcnow().date() - planted.date()).days
+
+        # DB 에도 daysElapsed 필드 갱신
+        users_collection.update_one(
+            { "kakao_id": kakao_id },
+            { "$set": { f"placements.{idx}.daysElapsed": days } }
+        )
+
+        # 템플릿에 넘길 때도 문자열로 만들어 줌
+        updated_placements.append({
+            "seedId": p['seedId'],
+            "x": p['x'],
+            "y": p['y'],
+            "plantedAt": planted.strftime('%Y-%m-%d %H:%M:%S'),
+            "daysElapsed": days
+        })
+
+    return render_template(
+        'home.html',
+        nickname=user['nickname'],
+        seeds=user['seeds'],
+        credit=user['credit'],
+        placements=updated_placements,
+        food=user['food']
+    )
 
 @app.route('/credit')
 def credit():

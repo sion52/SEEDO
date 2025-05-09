@@ -12,62 +12,67 @@
       <div class="logo">SEEDO</div>
       <div class="coin" onclick="location.href='/credit'">
         <img src="{{ url_for('static', filename='image/Vector.png') }}" alt="coin">
-        <span">{{ credit }}</span> <!-- Tomato count -->
+        <span>{{ credit }}</span>
       </div>
     </header>
 
     <div class="greeting">
       <div class="greeting-left">
-        <div class="nickname">반가워요, {{ nickname }}님</div>  <!-- 닉네임 출력 -->
+        <div class="nickname">반가워요, {{ nickname }}님</div>
         <div class="message">감자가 거의 다 자랐어요!</div>
       </div>
       <img src="{{ url_for('static', filename='image/profile.png') }}" alt="profile" width="70">
     </div>
     
-
-    <div class="farm">
+    <!-- 밭 -->
+    <div class="farm" id="farm">
       <img class="farm-bg" src="{{ url_for('static', filename='image/soil.png') }}">
-
-      <img class="crop crop1" src="{{ url_for('static', filename='image/seed.png') }}">
-      <img class="crop crop2" src="{{ url_for('static', filename='image/potato.png') }}">
-      <img class="crop crop3" src="{{ url_for('static', filename='image/sprout.png') }}">
-      <img class="crop crop4" src="{{ url_for('static', filename='image/tomato.png') }}">
-      <img class="crop crop5" src="{{ url_for('static', filename='image/potato.png') }}">
-      <img class="crop crop6" src="{{ url_for('static', filename='image/seed.png') }}">
-      <img class="crop crop7" src="{{ url_for('static', filename='image/seed.png') }}">
-      <img class="crop crop8" src="{{ url_for('static', filename='image/tomato.png') }}">
-      <img class="crop crop9" src="{{ url_for('static', filename='image/sprout.png') }}">
+      {% for p in placements %}
+        <img
+          src="{{ url_for('static', filename='image/seed.png') }}"
+          class="crop"
+          style="left:{{ p.x }}px; top:{{ p.y }}px; width:60px; height:60px;"
+        >
+      {% endfor %}
     </div>
+    
 
-
+    <!-- 씨앗 섹션 -->
     <div class="seed-section">
-        <div class="seed-header">
-            <span>내 씨앗</span>
+      <div class="seed-header">
+        <span>내 씨앗</span>
+      </div>
+      <div class="seed-scroll">
+        <!-- tomato -->
+        <div class="seed-item" draggable="true" data-seed-id="tomato">
+          <img src="{{ url_for('static', filename='image/tomato_round.png') }}">
+          <div class="count">{{ seeds['tomato'] }}</div>
         </div>
-        <div class="seed-scroll">
-            <div class="seed-item" draggable="true">
-                <img src="{{ url_for('static', filename='image/tomato_image.png') }}">
-                <div class="count">{{ food['tomato'] }}</div>  <!-- Tomato count를 db 값으로 표시 -->
-            </div>
-            <div class="seed-item" draggable="true">
-                <img src="{{ url_for('static', filename='image/eggplant.png') }}">
-                <div class="count">{{ food['egg_plant'] }}</div>  <!-- Eggplant count를 db 값으로 표시 -->
-            </div>
-            <div class="seed-item" draggable="true">
-                <img src="{{ url_for('static', filename='image/pepper.png') }}">
-                <div class="count">{{ food['red_pepper'] }}</div>  <!-- Red Pepper count를 db 값으로 표시 -->
-            </div>
-            <div class="seed-item" draggable="true">
-                <img src="{{ url_for('static', filename='image/carret.png') }}">
-                <div class="count">{{ food['carrot'] }}</div>  <!-- Carrot count를 db 값으로 표시 -->
-            </div>
-            <div class="seed-item" draggable="true">
-                <img src="{{ url_for('static', filename='image/potato_image.png') }}">
-                <div class="count">{{ food['potato'] }}</div>  <!-- Potato count를 db 값으로 표시 -->
-            </div>
+        <!-- eggplant -->
+        <div class="seed-item" draggable="true" data-seed-id="egg_plant">
+          <img src="{{ url_for('static', filename='image/egg_plant_round.png') }}">
+          <div class="count">{{ seeds['egg_plant'] }}</div>
         </div>
+        <!-- red_pepper -->
+        <div class="seed-item" draggable="true" data-seed-id="red_pepper">
+          <img src="{{ url_for('static', filename='image/red_pepper_round.png') }}">
+          <div class="count">{{ seeds['red_pepper'] }}</div>
+        </div>
+        <!-- carrot -->
+        <div class="seed-item" draggable="true" data-seed-id="carrot">
+          <img src="{{ url_for('static', filename='image/carrot_round.png') }}">
+          <div class="count">{{ seeds['carrot'] }}</div>
+        </div>
+        <!-- potato -->
+        <div class="seed-item" draggable="true" data-seed-id="potato">
+          <img src="{{ url_for('static', filename='image/potato_round.png') }}">
+          <div class="count">{{ seeds['potato'] }}</div>
+        </div>
+        
+      </div>
     </div>
-  
+
+    <!-- 이하 생략... (스토리지, 네비게이션 등) -->
 
     <div class="section">
       <div class="section-header">
@@ -76,7 +81,7 @@
       </div>
       <div class="storage-item">
         <div class="info">
-          <img src="{{ url_for('static', filename='image/tomato_image.png') }}">
+          <img src="{{ url_for('static', filename='image/tomato_round.png') }}">
           <div>토마토 <div><span style="color: #aaa;">{{ food['tomato'] }}개</span></div></div>  <!-- Tomato count -->
         </div>
         <div>개당 510원</div>
@@ -95,5 +100,118 @@
       </div>
     </div>
   </div>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const farm        = document.getElementById('farm');
+  const seedCounts  = {{ seeds | tojson }};
+  const placements  = {{ placements | tojson }};
+
+  // 0) 기존에 남아있는 crop 이미지 제거
+  farm.querySelectorAll('img.crop').forEach(el => el.remove());
+
+  // ① 이미지 매핑
+  const imageMap = {
+    seed:    "{{ url_for('static', filename='image/seed.png') }}",
+    sprout:  "{{ url_for('static', filename='image/sprout.png') }}",
+    little_tomato:     "{{ url_for('static', filename='image/little_tomato.png') }}",
+    little_potato:     "{{ url_for('static', filename='image/little_potato.png') }}",
+    little_carrot:     "{{ url_for('static', filename='image/little_carrot.png') }}",
+    little_egg_plant:  "{{ url_for('static', filename='image/little_egg_plant.png') }}",
+    little_basil:      "{{ url_for('static', filename='image/little_basil.png') }}",
+    little_red_pepper: "{{ url_for('static', filename='image/little_red_pepper.png') }}",
+    little_bull_pepper:"{{ url_for('static', filename='image/little_bull_pepper.png') }}",
+    little_grapes:     "{{ url_for('static', filename='image/little_grapes.png') }}",
+    tomato:    "{{ url_for('static', filename='image/tomato.png') }}",
+    potato:    "{{ url_for('static', filename='image/potato.png') }}",
+    carrot:    "{{ url_for('static', filename='image/carrot.png') }}",
+    egg_plant: "{{ url_for('static', filename='image/egg_plant.png') }}",
+    basil:     "{{ url_for('static', filename='image/basil.png') }}",
+    red_pepper:"{{ url_for('static', filename='image/red_pepper.png') }}",
+    bull_pepper:"{{ url_for('static', filename='image/bull_pepper.png') }}",
+    grapes:    "{{ url_for('static', filename='image/grapes.png') }}"
+  };
+
+  // ② 기존에 심어진 씨앗 복원
+  placements.forEach(p => {
+    let key;
+    if      (p.daysElapsed < 10) key = 'seed';
+    else if (p.daysElapsed < 20) key = 'sprout';
+    else if (p.daysElapsed < 30) key = 'little_' + p.seedId;
+    else                          key = p.seedId;
+
+    const src = imageMap[key] || imageMap.seed;
+    const img = document.createElement('img');
+    img.src = src;
+    img.classList.add('crop');
+    img.style.cssText = `
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      left: ${p.x}px;
+      top:  ${p.y}px;
+    `;
+    img.title = `경과일: ${p.daysElapsed}일`;
+    farm.appendChild(img);
+  });
+
+  // ③ 씨앗 드래그 시작 시
+  document.querySelectorAll('.seed-item').forEach(item => {
+    item.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', item.dataset.seedId);
+    });
+  });
+
+  // ④ 밭에 드롭 허용
+  farm.addEventListener('dragover', e => e.preventDefault());
+
+  // ⑤ 드롭 시 처리
+  farm.addEventListener('drop', async e => {
+    e.preventDefault();
+    const seedId = e.dataTransfer.getData('text/plain');
+    if (!seedId || seedCounts[seedId] <= 0) return;
+
+    const rect = farm.getBoundingClientRect();
+    const x    = e.clientX - rect.left - 30;
+    const y    = e.clientY - rect.top  - 30;
+
+    // UI에 seed.png 추가 (daysElapsed=0)
+    const img = document.createElement('img');
+    img.src = imageMap.seed;
+    img.classList.add('crop');
+    img.style.cssText = `
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      left: ${x}px;
+      top:  ${y}px;
+    `;
+    farm.appendChild(img);
+
+    // UI 카운트 차감
+    seedCounts[seedId]--;
+    document.querySelector(`.seed-item[data-seed-id="${seedId}"] .count`)
+            .textContent = seedCounts[seedId];
+
+    // 서버에 저장
+    try {
+      const res = await fetch('{{ url_for("plant_seed") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ seedId, count: seedCounts[seedId], x, y })
+      });
+      const data = await res.json();
+      if (!data.success) console.error('업데이트 실패:', data.message);
+    } catch (err) {
+      console.error('네트워크 오류:', err);
+    }
+  });
+});
+</script>
+
+    
+    
+    
+    
+  
 </body>
 </html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>시드 상점</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/credit.css') }}">
+</head>
+<body>
+  <div class="app-container">
+    <div class="statusbar-spacer"></div>
+
+    <!-- 헤더 -->
+    <header class="header">
+      <p class="page-title weight-500">시드 상점</p>
+      <button class="close-btn" onclick="history.back();">&times;</button>
+    </header>
+
+    <main class="main-content">
+      <div class="seed-card seed-amount-10">
+        <div class="seed-left">
+          <img src="{{ url_for('static', filename='image/coin_10.png') }}" alt="10 seed">
+          <div class="seed-info">
+            <p class="seed-amount weight-400">10 SEED</p>
+
+            <p class="seed-price weight-600">무료</p>
+          </div>
+        </div>
+        <button class="buy-btn weight-400">획득하기 &gt;</button>
+      </div>
+
+      <div class="seed-card">
+        <div class="seed-left">
+          <img src="{{ url_for('static', filename='image/coin_100.png') }}" alt="100 seed">
+          <div class="seed-info">
+            <p class="seed-amount weight-400">100 SEED</p>
+            <p class="seed-price weight-600">1,000원</p>
+          </div>
+        </div>
+        <button class="buy-btn weight-400">구매하기 &gt;</button>
+      </div>
+
+      <div class="seed-card">
+        <div class="seed-left">
+          <img src="{{ url_for('static', filename='image/coin_1100.png') }}" alt="1100 seed">
+          <div class="seed-info">
+            <p class="seed-amount weight-400">1100 SEED</p>
+            <p class="seed-price weight-600">10,000원</p>
+          </div>
+        </div>
+        <button class="buy-btn weight-400">구매하기 &gt;</button>
+      </div>
+
+      <div class="seed-card">
+        <div class="seed-left">
+          <img src="{{ url_for('static', filename='image/coin_11000.png') }}" alt="11000 seed">
+          <div class="seed-info">
+            <p class="seed-amount weight-400">11000 SEED</p>
+            <p class="seed-price weight-600">100,000원</p>
+          </div>
+        </div>
+        <button class="buy-btn weight-400">구매하기 &gt;</button>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
