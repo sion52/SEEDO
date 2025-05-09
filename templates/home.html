@@ -8,7 +8,8 @@
 </head>
 <body>
   <div class="app-container">
-    <img src="{{ url_for('static', filename='image/clock.png') }}" alt="Top Bar" class="top-bar">
+    <div class="scroll-wrapper">
+      <img src="{{ url_for('static', filename='image/clock.png') }}" alt="Top Bar" class="top-bar">
     <header>
       <div>
         <span class="logo">SEEDO</span>
@@ -134,6 +135,8 @@
         <button id="ad-close-btn" style="margin-top: 10px;">닫기</button>
       </div>
     </div>
+    </div>
+    
   </div>
 
   <script>
