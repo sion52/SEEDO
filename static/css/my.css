@@ -94,7 +94,7 @@ html, body {
 /* 본문 */
 .main-content {
   flex: 1;
-  padding: 130px 0 16px 0;  /* ✅ 헤더 높이만큼 위에서 띄움 */
+  padding: 115px 0 16px 0;  /* ✅ 헤더 높이만큼 위에서 띄움 */
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -114,7 +114,7 @@ html, body {
   padding: 28px 20px;
 }
 .card.wallet-card{
-  margin-top: 40px;
+  margin-top: 0px;
 }
 .card.inventory-card {
   min-height: 130px; /* 카드 길이 더 늘림 */
@@ -141,6 +141,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 27px;
 }
 .user-name {
   font-size: 20px;
@@ -159,7 +160,7 @@ html, body {
   background: #0dcd89;
   color: #fff;
   padding: 20px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
 }
 .wallet-row {
   display: flex;
