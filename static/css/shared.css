@@ -34,7 +34,7 @@ body {
   max-width: 402px;
   height: 874px;
   position: relative;
-  background-color: #fff;
+  background-color: #f6f6f6;
   overflow: hidden;
 }
 
@@ -64,6 +64,7 @@ body {
 .write {
   margin-top: 70px; /* 위에서 70px 내려오게 */
   font-size: 18px;
+  font-family: 'Pretendard-SemiBold';
 }
 
 
@@ -75,7 +76,7 @@ body {
   left: 0;
   right: 0;
   overflow-y: auto;
-  padding: 16px;
+  padding: 27px 21px 0 22px;
   box-sizing: border-box;
   background-color: #F6F6F6;
   scrollbar-width: none;
@@ -85,17 +86,24 @@ body {
 }
 
 .seed-item {
-  width: 325px;
-  height: 64px;
+  width: 357px;
+  height: 76px;
   display: flex;
-  align-items: center;
+  align-items: center;      /* 세로 중앙 정렬 */
+  justify-content: space-between; /* 좌우 간격 정렬 */
   background-color: white;
-  padding: 12px 16px 0 16px;
+  padding: 0 22.5px;          /* 상하 여백 제거, 좌우 여백 유지 */
   margin-bottom: 12px;
   border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 0px 10px rgba(0,0,0,0.1);
+  box-sizing: border-box;   /* 패딩 포함 크기 유지 */
 }
 
+.seed-icon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;  /* 원본 비율 유지 */
+}
 .seed-circle {
   width: 28px;
   height: 28px;
@@ -130,19 +138,28 @@ body {
 }
 
 .counter-btn {
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   border: none;
-  border-radius: 6px;
-  background-color: #eee;
-  font-size: 18px;
+  background: none;  /* ✅ 배경 제거 */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+}
+
+.counter-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .counter-value {
   min-width: 24px;
   text-align: center;
   font-size: 16px;
+  font-family: 'Pretendard-Regular';
 }
 
 /* ✅ 하단 내비게이션 바 */
@@ -156,7 +173,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-top: 1px solid #ccc;
+  /* border-top: 1px solid #ccc; */
 }
 
 /* 각 버튼 */
@@ -170,6 +187,13 @@ body {
   justify-content: center;
   margin: 0 0 20px 0;
 }
+
+.nav-item img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
 
 /* 가운데 버튼 강조 (active로 설정됨) */
 .nav-item.active {
@@ -185,7 +209,7 @@ body {
   font-size: 16px;
   border: none;
   border-radius: 8px;
-  color: white;
+  color: #F6F6F6;
   font-weight: bold;
   cursor: pointer;
   
@@ -196,19 +220,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #10B981;
+  background-color: #0DCD89;
   width: 358px;
-  padding: 0 16px;
-  border-radius: 12px;
+  padding: 26px 20px;
+  border-radius: 10px;
   height: 68px;
   cursor: pointer;
   box-sizing: border-box;
+  font-family: 'Pretendard-Bold';
 }
 
 /* 구매 버튼 고정 */
 .back {
   position: absolute;
-  bottom: 88px;
+  bottom: 114px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -221,7 +246,7 @@ body {
   height: 30px;
   border-radius: 50%;
   background-color: white;
-  color: #10B981;
+  color: #0DCD89;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -229,13 +254,14 @@ body {
   line-height: 1;            /* ✅ 줄 높이 제거 */
   box-sizing: border-box;   /* ✅ 사이즈 안정 */
   flex-shrink: 0;            /* ✅ 작아지지 않게 */
+  font-family: 'Pretendard-SemiBold';
 }
 
 
 .buy-button {
   font-size: 16px;
   font-weight: bold;
-  color: white;
+  color: #F6F6F6;
   display: flex;
   align-items: center;
 }
@@ -245,6 +271,7 @@ body {
   font-weight: bold;
   color: white;
   width: 150px;
+  text-align: right; /* ✅ 오른쪽 정렬 추가 */
 }
 
 .modal-overlay {
@@ -308,7 +335,7 @@ body {
 }
 
 .modal-confirm {
-  background-color: #10B981;
+  background-color: #0DCD89;
   color: white;
 }
 
