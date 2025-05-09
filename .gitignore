@@ -1,0 +1,34 @@
+# Python 가상환경
+venv/
+ENV/
+env/
+.venv/
+
+# Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE 설정 파일
+.vscode/
+.idea/
+
+# OS별 파일
+.DS_Store
+Thumbs.db
+
+# 환경 설정
+.env
+*.env
+
+# 로그 및 기타 파일
+*.log
+*.sqlite3
+
+# pip 패키지 기록 파일
+pip-log.txt
+
+# 기타 빌드 산출물
+build/
+dist/
+*.egg-info/

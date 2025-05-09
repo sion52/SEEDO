@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>카카오 로그인</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/kakao.css') }}">
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script>
+    Kakao.init('98dabc3d35b88ef7b5542996e20be45b');
+  
+    function kakaoLogin() {
+      Kakao.Auth.login({
+        success: function (authObj) {
+          Kakao.API.request({
+            url: '/v2/user/me',
+            success: function (res) {
+              fetch('/login_kakao', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(res)
+              })
+              .then(response => response.json())
+              .then(data => {
+                if (data.redirect_url) {
+                  window.location.href = data.redirect_url;  // → /home으로 이동
+                }
+              });
+            },
+            fail: function (error) {
+              alert("사용자 정보 요청 실패: " + JSON.stringify(error));
+            }
+          });
+        },
+        fail: function (err) {
+          alert("로그인 실패: " + JSON.stringify(err));
+        }
+      });
+    }
+  </script>
+  
+</head>
+<body>
+  <div class="app-container">
+    <div class="container">
+      <div class="message">
+        <p>간편하게 로그인하고</p>
+        <p>다양한 서비스를 이용해보세요</p>
+      </div>
+      <button class="kakao-login" onclick="kakaoLogin()">카카오 로그인</button>
+    </div>
+  </div>
+</body>
+
+</html>

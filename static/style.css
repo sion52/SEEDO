@@ -1,0 +1,43 @@
+.app-container {
+    width: 402px;
+    height: 874px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .landing-screen {
+    background: linear-gradient(to bottom right, #75FFC1, #0DCD89);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo-container {
+    text-align: center;
+  }
+  
+  .logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* 수평 가운데 */
+    align-items: center;     /* 수직 가운데 */
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
