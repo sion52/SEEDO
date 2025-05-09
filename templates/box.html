@@ -58,9 +58,10 @@
       </div>
 
       <div class="box-footer">
-        <button class="btn-outline">집으로 배송 받기</button>
+        <button class="btn-outline" onclick="delivery()">집으로 배송 받기</button>
         <button class="btn-filled" onclick="sellAll()">0원에 팔기</button>
       </div>
+      <img src="{{ url_for('static', filename='image/bar.png') }}" alt="Bottom Clock" class="bottom-bar">
       <!-- 판매 완료 모달 -->
       <div id="sellSuccessModal" class="modal-overlay">
         <div class="modal-content">
@@ -76,6 +77,18 @@
         </div>
       </div>
     </div>
+
+        <!-- 배송 시작 모달 -->
+    <div id="deliveryModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">배송 시작</div>
+        <p class="modal-body">선택한 상품을 배송 중입니다.</p>
+        <div class="modal-buttons" style="justify-content: center;">
+          <button class="modal-confirm" onclick="closeDeliveryModal()">확인</button>
+        </div>
+      </div>
+    </div>
+
 
     <script>
       function changeCount(btn, delta) {
@@ -147,6 +160,45 @@
 
         function closeSellModal() {
             window.location.href = "/home";
+        }
+
+        function delivery() {
+          const payload = {};
+          let hasItem = false;
+
+          document.querySelectorAll(".box-item").forEach((item) => {
+            const id = item.dataset.id;
+            const count = parseInt(item.querySelector(".counter-value").textContent);
+            if (count > 0) {
+              payload[id] = count;
+              hasItem = true;
+            }
+          });
+
+          if (!hasItem) {
+            alert("배송할 항목을 선택하세요.");
+            return;
+          }
+
+          fetch("/start_delivery", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.success) {
+                document.getElementById("deliveryModal").style.display = "flex";
+              } else {
+                alert(data.message || "배송 실패");
+              }
+            });
+        }
+
+        function closeDeliveryModal() {
+          window.location.href = "/home";
         }
 
         updateTotalPrice();

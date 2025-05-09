@@ -1,9 +1,20 @@
+.clock-icon{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+}
+
 .back{
-    bottom: 0px;
+    bottom: 10px;
+    padding: 0;
+    margin-bottom: 20px;
 }
 
 .store-list{
-    margin-bottom: 75px;
+    margin-bottom: 85px;
 }
 
 .box-close {
@@ -11,4 +22,11 @@
     cursor: pointer;
     position: absolute;
     right: 9%;
+}
+
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    width: 402px;
+    z-index: 2;
 }
