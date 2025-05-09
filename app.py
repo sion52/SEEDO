@@ -26,7 +26,7 @@ def normalize_keys(user):
         "Eggplant": "egg_plant",
         "redpepper": "red_pepper",
         "paprika": "bull_pepper",
-        "grape": "grapes"
+        "grape": "grape"
     }
 
     for field in ["seeds", "food", "delivery"]:
@@ -650,7 +650,7 @@ def clear_delivery():
         "basil": 0,
         "red_pepper": 0,
         "bull_pepper": 0,
-        "grapes": 0
+        "grape": 0
     }
 
     users_collection.update_one(
