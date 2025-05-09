@@ -46,13 +46,27 @@ default_user = {
         "red_pepper": 0,
         "bull_pepper": 0,
         "grapes": 0
+
     },
+
+    "delivery": {
+        "tomato": 0,
+        "potato": 0,
+        "carrot": 0,
+        "egg_plant": 0,
+        "basil": 0,
+        "red_pepper": 0,
+        "bull_pepper": 0,
+        "grapes": 0
+
+    },
+
     "placements": [],
-    # 로그인 체크용 필드 추가
+
     "last_check_in_date": datetime.utcnow(),  # 마지막 로그인 시각
     "date_minus": 0                           # 오늘과 마지막 로그인 날짜 차이(일)
-}
 
+}
 
 @app.route('/plant_seed', methods=['POST'])
 
@@ -160,6 +174,16 @@ def login_kakao():
             "food": {
                 "tomato": 0, "potato": 0, "carrot": 0, "egg_plant": 0,
                 "basil": 0, "red_pepper": 0, "bull_pepper": 0, "grapes": 0
+            },
+            "delivery": {
+                "tomato": 0,
+                "potato": 0,
+                "carrot": 0,
+                "egg_plant": 0,
+                "basil": 0,
+                "red_pepper": 0,
+                "bull_pepper": 0,
+                "grapes": 0
             },
             "placements": [],
             "last_check_in_date": now,
@@ -432,6 +456,34 @@ def sell_items():
     )
     
     return jsonify(success=True, won=total_price, redirect_url=url_for("home"))
+
+@app.route('/start_delivery', methods=['POST'])
+def start_delivery():
+    if 'kakao_id' not in session:
+        return jsonify(success=False, message="로그인이 필요합니다.")
+
+    kakao_id = session['kakao_id']
+    user = users_collection.find_one({"kakao_id": kakao_id})
+    if not user:
+        return jsonify(success=False, message="사용자 정보가 없습니다.")
+
+    data = request.get_json()  # 예: {'tomato': 2, 'carrot': 1}
+
+    updates = {}
+    for item, count in data.items():
+        current = user['food'].get(item, 0)
+        if count > current:
+            return jsonify(success=False, message=f"{item} 재고 부족")
+        updates[f"food.{item}"] = -count
+        updates[f"delivery.{item}"] = count
+
+
+    users_collection.update_one(
+        {"kakao_id": kakao_id},
+        {"$inc": updates}
+    )
+
+    return jsonify(success=True)
 
 
 @app.route('/my')
