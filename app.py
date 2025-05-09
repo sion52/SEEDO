@@ -320,7 +320,26 @@ def home():
 
     )
 
+@app.route('/add_credit', methods=['POST'])
+def add_credit():
+    if 'kakao_id' not in session:
+        return jsonify({"message": "로그인이 필요합니다."}), 403
 
+    kakao_id = session['kakao_id']
+    user = users_collection.find_one({"kakao_id": kakao_id})
+
+    if not user:
+        return jsonify({"message": "사용자 정보가 없습니다."}), 404
+
+    data = request.get_json()
+    amount = data.get('amount', 10)
+
+    users_collection.update_one(
+        {"kakao_id": kakao_id},
+        {"$inc": {"credit": amount}}
+    )
+
+    return jsonify({"message": f"{amount} SEED를 획득하였습니다!"})
 
 @app.route('/credit')
 

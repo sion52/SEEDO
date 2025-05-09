@@ -1,122 +1,148 @@
 @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-  }
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  font-family: 'Pretendard-Regular', sans-serif;
+}
+
+.app-container {
+  width: 402px;
+  height: 874px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+
+
+.header {
+  position: relative;
+  height: 56px;
   
-  body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-    font-family: 'Pretendard-Regular', sans-serif;
-  }
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  z-index: 10;
+  padding-top: 14px;
+}
+.page-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+  line-height: 1;
+}
+.close-btn {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 40px;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+}
+
+.main-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  align-items: center;
+}
+
+.seed-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  height: 70px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
   
-  .app-container {
-    width: 402px;
-    height: 874px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-  }
+  margin-bottom: 12px;
+}
+.seed-left {
+  display: flex;
+  align-items: center;
+}
+.seed-left img {
+  width: 48px;
+  height: 48px;
+  margin-right: 12px;
+}
+.seed-info p {
+  margin: 0;
+  line-height: 1.4;
+}
+.seed-amount {
+  font-size: 14px;
+  color: #555;
   
- 
-  
-  .header {
-    position: relative;
-    height: 56px;
-    
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    z-index: 10;
-    padding-top: 14px;
-  }
-  .page-title {
-    font-size: 16px;
-    font-weight: 500;
-    color: #222;
-    line-height: 1;
-  }
-  .close-btn {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 40px;
-    background: none;
-    border: none;
-    color: #333;
-    cursor: pointer;
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    background-color: #f9f9f9;
-    align-items: center;
-  }
-  
-  .seed-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 320px;
-    height: 70px;
-    padding: 12px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    
-    margin-bottom: 12px;
-  }
-  .seed-left {
-    display: flex;
-    align-items: center;
-  }
-  .seed-left img {
-    width: 48px;
-    height: 48px;
-    margin-right: 12px;
-  }
-  .seed-info p {
-    margin: 0;
-    line-height: 1.4;
-  }
-  .seed-amount {
-    font-size: 14px;
-    color: #555;
-    
-  }
-  .seed-amount-10 {
-    margin-bottom:20px;
-  }
-  
-  .seed-price {
-    font-size: 15px;
-    color: #000;
-  }
-  .buy-btn {
-    background: none;
-    border: none;
-    color: #555;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  .weight-400 { font-weight: 500; }
-  .weight-500 { font-weight: 600; }
-  .weight-600 { font-weight: 700; }
-  
+}
+.seed-amount-10 {
+  margin-bottom:20px;
+}
+
+.seed-price {
+  font-size: 15px;
+  color: #000;
+}
+.buy-btn {
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.weight-400 { font-weight: 500; }
+.weight-500 { font-weight: 600; }
+.weight-600 { font-weight: 700; }
+
+#ad-popup {
+  display: none; /* 기본은 숨김 */
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 어두운 배경 */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 300px;
+  width: 70%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.popup-content video {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+

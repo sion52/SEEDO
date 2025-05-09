@@ -17,6 +17,8 @@
     </header>
 
     <main class="main-content">
+
+
       <div class="seed-card seed-amount-10">
         <div class="seed-left">
           <img src="{{ url_for('static', filename='image/coin_10.png') }}" alt="10 seed">
@@ -26,7 +28,7 @@
             <p class="seed-price weight-600">무료</p>
           </div>
         </div>
-        <button class="buy-btn weight-400">획득하기 &gt;</button>
+        <button class="buy-btn weight-400" onclick="showAdPopup()">획득하기 &gt;</button>
       </div>
 
       <div class="seed-card">
@@ -63,5 +65,53 @@
       </div>
     </main>
   </div>
+
+<!-- 광고 팝업 -->
+<div id="ad-popup" class="ad-popup">
+  <div class="popup-content">
+    <video id="ad-video" muted controls>
+      <source src="{{ url_for('static', filename='image/video.mp4') }}" type="video/mp4">
+      광고를 불러올 수 없습니다.
+    </video>
+    <p>광고 시청 후 보상을 드립니다.</p>
+  </div>
+</div>
+  <!-- JS -->
+  <script>
+    function showAdPopup() {
+      const popup = document.getElementById('ad-popup');
+      const video = document.getElementById('ad-video');
+    
+      // 팝업 보이기
+      popup.style.display = 'flex';
+    
+      // 이벤트 초기화
+      video.pause();
+      video.currentTime = 0;
+    
+      // ❗ ended 이벤트 중복 제거 후 재등록
+      video.onended = null;
+    
+      video.onended = () => {
+        console.log('영상 끝!');  // ✅ 콘솔에서 반드시 이거 떠야 함
+    
+        fetch('/add_credit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: 10 })
+        })
+        .then(res => res.json())
+        .then(data => {
+          popup.style.display = 'none';  // ✅ 팝업 닫기
+        });
+      };
+    
+      // 영상 재생
+      video.play();
+    }
+    </script>
+    
+    
+    
 </body>
 </html>
