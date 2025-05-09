@@ -20,61 +20,39 @@ app.secret_key = '98dabc3d35b88ef7b5542996e20be45b'  # 보안 키 필수!
 
 
 
-# 사용자 기본 구조 예시
+from datetime import datetime
 
 default_user = {
-
     "kakao_id": "123456",
-
     "nickname": "홍길동",
-
-    "credit": 1000,  # 기본 크레딧
-
-    "won":0,
-
+    "credit": 1000,
+    "won": 0,
     "seeds": {
-
         "tomato": 0,
-
         "potato": 0,
-
         "carrot": 0,
-
         "egg_plant": 0,
-
         "basil": 0,
-
         "red_pepper": 0,
-
         "bull_pepper": 0,
-
         "grapes": 0
-
     },
-
     "food": {
-
         "tomato": 0,
-
         "potato": 0,
-
         "carrot": 0,
-
         "egg_plant": 0,
-
         "basil": 0,
-
         "red_pepper": 0,
-
         "bull_pepper": 0,
-
         "grapes": 0
-
     },
-
-    "placements": []
-
+    "placements": [],
+    # 로그인 체크용 필드 추가
+    "last_check_in_date": datetime.utcnow(),  # 마지막 로그인 시각
+    "date_minus": 0                           # 오늘과 마지막 로그인 날짜 차이(일)
 }
+
 
 @app.route('/plant_seed', methods=['POST'])
 
@@ -161,164 +139,117 @@ def login():
 
 
 @app.route('/login_kakao', methods=['POST'])
-
 def login_kakao():
-
     user_info = request.get_json()
-
     kakao_id = str(user_info.get("id"))
-
     nickname = user_info.get("properties", {}).get("nickname", "알 수 없음")
-
-
-
-    # DB에서 사용자 확인
+    now = datetime.utcnow()
 
     user = users_collection.find_one({"kakao_id": kakao_id})
 
     if not user:
-
         users_collection.insert_one({
-
             "kakao_id": kakao_id,
-
             "nickname": nickname,
-
             "credit": 1000,
-
-            "won":0,
-
+            "won": 0,
             "seeds": {
-
-                "tomato": 0,
-
-                "potato": 0,
-
-                "carrot": 0,
-
-                "egg_plant": 0,
-
-                "basil": 0,
-
-                "red_pepper": 0,
-
-                "bull_pepper": 0,
-
-                "grapes": 0
-
+                "tomato": 0, "potato": 0, "carrot": 0, "egg_plant": 0,
+                "basil": 0, "red_pepper": 0, "bull_pepper": 0, "grapes": 0
             },
-
             "food": {
-
-                "tomato": 0,
-
-                "potato": 0,
-
-                "carrot": 0,
-
-                "egg_plant": 0,
-
-                "basil": 0,
-
-                "red_pepper": 0,
-
-                "bull_pepper": 0,
-
-                "grapes": 0
-
+                "tomato": 0, "potato": 0, "carrot": 0, "egg_plant": 0,
+                "basil": 0, "red_pepper": 0, "bull_pepper": 0, "grapes": 0
             },
-
-            "placements": []
-
+            "placements": [],
+            "last_check_in_date": now,
+            "date_minus": 0
         })
+    else:
+        prev = user.get("last_check_in_date")
+        prev_date = prev.date() if prev else now.date()
+        today = now.date()
+        diff_days = (today - prev_date).days
 
+        old_minus = user.get("date_minus", 0)
 
+        if old_minus >= 10:
+            # 이미 10일 이상이면 유지
+            new_minus = old_minus
+        elif diff_days == 0:
+            # 연속 접속이면 리셋
+            new_minus = 0
+        else:
+            # 누적
+            new_minus = old_minus + diff_days
 
+        users_collection.update_one(
+            {"kakao_id": kakao_id},
+            {
+                "$set": {
+                    "last_check_in_date": now,
+                    "date_minus": new_minus
+                }
+            }
+        )
     session['kakao_id'] = kakao_id
-
     return jsonify({"redirect_url": url_for('home')})
 
 
 
-@app.route('/home')
-
-def home():
-
+@app.route('/watch_ad', methods=['POST'])
+def watch_ad():
     kakao_id = session.get('kakao_id')
-
     if not kakao_id:
+        return jsonify(success=False), 403
 
+    users_collection.update_one(
+        {"kakao_id": kakao_id},
+        {"$set": {"date_minus": 0}}
+    )
+    return jsonify(success=True)
+
+
+
+@app.route('/home')
+def home():
+    kakao_id = session.get('kakao_id')
+    if not kakao_id:
         return redirect(url_for('login'))
-
-
 
     user = users_collection.find_one({"kakao_id": kakao_id})
-
     if not user:
-
         return redirect(url_for('login'))
 
-
-
-    # 최신 daysElapsed 계산 & DB 업데이트
-
     updated_placements = []
-
     for idx, p in enumerate(user.get('placements', [])):
-
-        # p['plantedAt'] 는 datetime 객체
-
         planted = p['plantedAt']
-
         days = (datetime.utcnow().date() - planted.date()).days
 
-
-
-        # DB 에도 daysElapsed 필드 갱신
-
         users_collection.update_one(
-
-            { "kakao_id": kakao_id },
-
-            { "$set": { f"placements.{idx}.daysElapsed": days } }
-
+            {"kakao_id": kakao_id},
+            {"$set": {f"placements.{idx}.daysElapsed": days}}
         )
 
-
-
-        # 템플릿에 넘길 때도 문자열로 만들어 줌
-
         updated_placements.append({
-
             "seedId": p['seedId'],
-
             "x": p['x'],
-
             "y": p['y'],
-
             "plantedAt": planted.strftime('%Y-%m-%d %H:%M:%S'),
-
             "daysElapsed": days
-
         })
 
-
-
+    date_minus = user.get("date_minus", 0)
     return render_template(
-
         'home.html',
-
         nickname=user['nickname'],
-
         seeds=user['seeds'],
-
         credit=user['credit'],
-
         placements=updated_placements,
-
-        food=user['food']
-
+        food=user['food'],
+        date_minus=date_minus
     )
+
 
 @app.route('/add_credit', methods=['POST'])
 def add_credit():
