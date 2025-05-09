@@ -48,6 +48,7 @@ padding-bottom: 100px; /* 하단 nav-bar 여백 */
     position: fixed;
     bottom: 0;
     width: 402px;
+    height: auto;
     z-index: 2;
 }
 
@@ -80,7 +81,8 @@ margin-top: 50px;
   border-radius: 8px;
   font-size: 15px;
   gap: 6px;
-  margin-left: 200px;
+  margin-left: 180px;
+  cursor: pointer;
 }
 
 .coin img {
@@ -208,6 +210,7 @@ margin-top: 50px;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 0px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
 }
 
 .section-header {
@@ -244,32 +247,39 @@ margin-top: 50px;
   position: fixed;
   bottom: 0;
   width: 402px;
-  height: 80px;
+  height: 88px;
   background-color: white;
   display: flex;
-  border-top: 1px solid #ccc;
   justify-content: space-around;
   align-items: center;
+  /* border-top: 1px solid #ccc; */
 }
 
+/* 각 버튼 */
 .nav-item {
-  width: 60px;
+  width: 76px;
   height: 60px;
+  border-radius: 50%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 0 20px 0;
 }
 
+.nav-item img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+/* 가운데 버튼 강조 (active로 설정됨) */
 .nav-item.active {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  margin-top: -20px;
-  background: linear-gradient(to bottom, #a7f3d0, #6ee7b7);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  width: 44px;
+  height: 44px;
   transition: all 0.2s;
 }
+
 /* home.css 에 추가 혹은 수정 */
 .farm {
   position: relative;    /* 절대위치 자식이 이 박스를 기준으로 삼게 */

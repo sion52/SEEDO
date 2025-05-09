@@ -328,10 +328,9 @@ def add_credit():
     return jsonify({"message": f"{amount} SEED를 획득하였습니다!"})
 
 @app.route('/credit')
-
 def credit():
-
     return render_template('credit.html')
+
 @app.route('/storage')
 def storage():
     if 'kakao_id' not in session:
@@ -357,14 +356,14 @@ def storage():
 @app.route('/store')
 def store():
     seed_data = [
-        {"id": "carrot", "name": "당근 씨앗", "price": 50, "count": 0, "image": "carrot_round.png"},
-        {"id": "tomato", "name": "토마토 씨앗", "price": 50, "count": 0, "image": "tomato_round.png"},
+        {"id": "carrot", "name": "당근 씨앗", "price": 40, "count": 0, "image": "carrot_round.png"},
+        {"id": "tomato", "name": "토마토 씨앗", "price": 70, "count": 0, "image": "tomato_round.png"},
         {"id": "basil", "name": "바질 씨앗", "price": 50, "count": 0, "image": "basil_round.png"},
-        {"id": "potato", "name": "감자 씨앗", "price": 50, "count": 0, "image": "potato_round.png"},
+        {"id": "potato", "name": "감자 씨앗", "price": 60, "count": 0, "image": "potato_round.png"},
         {"id": "Eggplant", "name": "가지 씨앗", "price": 50, "count": 0, "image": "egg_plant_round.png"},
         {"id": "redpepper", "name": "고추 씨앗", "price": 50, "count": 0, "image": "red_pepper_round.png"},
         {"id": "paprika", "name": "파프리카 씨앗", "price": 50, "count": 0, "image": "paprika_round.png"},
-        {"id": "grape", "name": "포도 씨앗", "price": 100, "count": 0, "image": "grape_round.png"}
+        {"id": "grape", "name": "포도 씨앗", "price": 120, "count": 0, "image": "grape_round.png"}
     ]
     return render_template('store.html', seeds=seed_data)
 
@@ -382,14 +381,14 @@ def buy_seeds():
 
     # 실제 가격 매핑
     seed_prices = {
-        "carrot": 50,
-        "tomato": 50,
+        "carrot": 40,
+        "tomato": 70,
         "basil": 50,
-        "potato": 50,
+        "potato": 60,
         "Eggplant": 50,
         "redpepper": 50,
         "paprika": 50,
-        "grape": 100
+        "grape": 120
     }
 
     total_cost = 0
@@ -574,6 +573,20 @@ def my():
         food_preview=food_preview,
         delivery_preview=delivery_preview
     )
+
+@app.route('/exchange', methods=['POST'])
+def exchange():
+    if 'kakao_id' not in session:
+        return jsonify(success=False)
+
+    kakao_id = session['kakao_id']
+    users_collection.update_one(
+        {"kakao_id": kakao_id},
+        {"$set": {"won": 0}}
+    )
+
+    return jsonify(success=True)
+
 
 @app.route('/delivery')
 def delivery():

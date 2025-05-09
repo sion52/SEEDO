@@ -27,17 +27,21 @@ body {
   align-items: center;
   height: 100vh;
   background-color: #f4f4f4;
+  font-family: 'Pretendard-Regular', sans-serif;
 }
+
 
 .app-container {
-  width: 100%;
-  max-width: 402px;
+  position: relative;  /* 자식 absolute 기준 */
+  width: 402px;
   height: 874px;
-  position: relative;
+  margin: 0 auto;
+  border: 1px solid #ccc;
   background-color: #f6f6f6;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
-
 
 
 .clock {
@@ -50,9 +54,10 @@ body {
 
 /* 헤더 고정 */
 .header {
-  position: fixed;
+  position: absolute;  /* ✅ fixed ➡ absolute */
   top: 0;
-  width: 402px;
+  left: 0;
+  width: 100%;
   height: 115px;
   background-color: white;
   display: flex;
@@ -62,7 +67,7 @@ body {
 }
 
 .write {
-  margin-top: 70px; /* 위에서 70px 내려오게 */
+  margin-top: 60px; /* 위에서 70px 내려오게 */
   font-size: 18px;
   font-family: 'Pretendard-SemiBold';
 }
@@ -76,7 +81,7 @@ body {
   left: 0;
   right: 0;
   overflow-y: auto;
-  padding: 27px 21px 0 22px;
+  padding: 25px 20px 25px 20px;
   box-sizing: border-box;
   background-color: #F6F6F6;
   scrollbar-width: none;
@@ -86,7 +91,7 @@ body {
 }
 
 .seed-item {
-  width: 357px;
+  width: 358px;
   height: 76px;
   display: flex;
   align-items: center;      /* 세로 중앙 정렬 */
@@ -165,15 +170,16 @@ body {
 /* ✅ 하단 내비게이션 바 */
 /* 네비게이션 바 고정 */
 .nav-bar {
-  position: absolute;
+  position: absolute;  /* ✅ fixed ➡ absolute */
   bottom: 0;
+  left: 0;
   width: 100%;
   height: 88px;
   background-color: white;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* border-top: 1px solid #ccc; */
+  z-index: 10;
 }
 
 /* 각 버튼 */
@@ -193,7 +199,6 @@ body {
   height: 44px;
   object-fit: contain;
 }
-
 
 /* 가운데 버튼 강조 (active로 설정됨) */
 .nav-item.active {
@@ -232,14 +237,16 @@ body {
 
 /* 구매 버튼 고정 */
 .back {
-  position: absolute;
-  bottom: 114px;
+  position: absolute;  /* fixed ➡ absolute */
+  bottom: 114px;        /* 네비게이션 위로 */
+  left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
   z-index: 10;
 }
+
 
 .buy-circle {
   width: 30px;
@@ -353,9 +360,9 @@ body {
 }
 
 .bottom-bar {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 402px;
     height: auto;
-    z-index: 2;
+    z-index: 11;
 }
