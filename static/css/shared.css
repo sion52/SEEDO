@@ -65,6 +65,7 @@ body {
 .write {
   margin-top: 70px; /* 위에서 70px 내려오게 */
   font-size: 18px;
+  font-family: 'Pretendard-SemiBold';
 }
 
 
@@ -76,7 +77,7 @@ body {
   left: 0;
   right: 0;
   overflow-y: auto;
-  padding: 16px;
+  padding: 27px 21px 0 22px;
   box-sizing: border-box;
   background-color: #F6F6F6;
   scrollbar-width: none;
@@ -86,17 +87,24 @@ body {
 }
 
 .seed-item {
-  width: 325px;
-  height: 64px;
+  width: 357px;
+  height: 76px;
   display: flex;
-  align-items: center;
+  align-items: center;      /* 세로 중앙 정렬 */
+  justify-content: space-between; /* 좌우 간격 정렬 */
   background-color: white;
-  padding: 12px 16px 0 16px;
+  padding: 0 22.5px;          /* 상하 여백 제거, 좌우 여백 유지 */
   margin-bottom: 12px;
   border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 0px 10px rgba(0,0,0,0.1);
+  box-sizing: border-box;   /* 패딩 포함 크기 유지 */
 }
 
+.seed-icon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;  /* 원본 비율 유지 */
+}
 .seed-circle {
   width: 28px;
   height: 28px;
@@ -172,6 +180,13 @@ body {
   justify-content: center;
   margin: 0 0 20px 0;
 }
+
+.nav-item img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
 
 /* 가운데 버튼 강조 (active로 설정됨) */
 .nav-item.active {
