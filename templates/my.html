@@ -17,7 +17,7 @@
 
     <main class="main-content">
       <section class="card profile-card">
-        <span class="user-name weight-600">이미주 님</span>
+        <span class="user-name weight-600">{{ nickname }} 님</span>
         <button class="logout-btn weight-400">로그아웃 &gt;</button>
       </section>
 
@@ -25,7 +25,7 @@
         <div class="wallet-row">
           <div class="wallet-left">
             <div class="circle-icon">$</div>
-            <span class="wallet-amount weight-600">100 SEED</span>
+            <span class="wallet-amount weight-600">{{ credit }} SEED</span>
           </div>
           <button class="wallet-action weight-400">충전하기 &gt;</button>
         </div>
@@ -33,7 +33,7 @@
         <div class="wallet-row">
           <div class="wallet-left">
             <div class="circle-icon">₩</div>
-            <span class="wallet-amount weight-600">103,450원</span>
+            <span class="wallet-amount weight-600">{{ won }}원</span>
           </div>
           <button class="wallet-action weight-400">환전하기 &gt;</button>
         </div>
@@ -48,7 +48,7 @@
         <div class="item-row">
           <img src="{{ url_for('static', filename='image/potato.png') }}" alt="감자" class="item-img">
           <div class="item-text">
-            <p class="weight-400">감자<br><span class="sub-count">8개</span></p>
+            <p class="weight-400">감자<br><span class="sub-count">{{ potato_count }}개</span></p>
           </div>
           <span class="item-price weight-500">개당 550원</span>
         </div>
